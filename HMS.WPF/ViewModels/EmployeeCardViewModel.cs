@@ -20,12 +20,12 @@ namespace HMS.WPF.ViewModels
 
         public void navigateToDetails()
         {
-            Home.ViewModel.Content = new EmployeeDetailsVeiwModel(ID)
-            {
-                EmployeeName = Name,
-                EmployeeRole = Role,
-                EmployeeSalary = Salary,
-            };
+            //Home.ViewModel.Content = new EmployeeDetailsVeiwModel(ID)
+            //{
+            //    EmployeeName = Name,
+            //    EmployeeRole = Role,
+            //    EmployeeSalary = Salary,
+            //};
         }
     }
 }

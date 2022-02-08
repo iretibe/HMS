@@ -9,10 +9,10 @@ namespace HMS.WPF.Services
     {
         public static SqlConnection InitConnection()
         {
-            String connectionString = $"server={Credentials.Server};" +
-                $"user id={Credentials.UserID};" +
-                $"password={Credentials.Password};" +
-                $"database={Credentials.Database}";
+            String connectionString = $"server={CredentialsModel.Server};" +
+                $"user id={CredentialsModel.UserID};" +
+                $"password={CredentialsModel.Password};" +
+                $"database={CredentialsModel.Database}";
 
             return new SqlConnection(connectionString);
         }
@@ -42,13 +42,13 @@ namespace HMS.WPF.Services
                 {
                     Config = new Config
                     {
-                        StandardWardPrice = reader.GetFloat("standard_price"),
-                        SemiPrivateRoomPrice = reader.GetFloat("semi_price"),
-                        PrivateRoomPrice = reader.GetFloat("private_price"),
-                        AppointmentHourPrice = reader.GetFloat("appointment_price"),
-                        StandardWardCapacity = reader.GetInt32("standard_capacity"),
-                        SemiPrivateRoomCapacity = reader.GetInt32("semi_capacity"),
-                        PrivateRoomCapacity = reader.GetInt32("private_capacity")
+                        //StandardWardPrice = reader.GetFloat("standard_price"),
+                        //SemiPrivateRoomPrice = reader.GetFloat("semi_price"),
+                        //PrivateRoomPrice = reader.GetFloat("private_price"),
+                        //AppointmentHourPrice = reader.GetFloat("appointment_price"),
+                        //StandardWardCapacity = reader.GetInt32("standard_capacity"),
+                        //SemiPrivateRoomCapacity = reader.GetInt32("semi_capacity"),
+                        //PrivateRoomCapacity = reader.GetInt32("private_capacity")
                     };
                 }
             }
@@ -79,8 +79,8 @@ namespace HMS.WPF.Services
                     departments.Add(
                         new Department
                         {
-                            ID = reader.GetString("department_id"),
-                            Name = reader.GetString("name")
+                            //ID = reader.GetString("department_id"),
+                            //Name = reader.GetString("name")
                         }
                     );
                 }
@@ -109,16 +109,16 @@ namespace HMS.WPF.Services
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    String room_id = reader.GetString("room_id");
-                    int number = reader.GetInt32("room_number");
-                    String type = reader.GetString("type");
+                    //String room_id = reader.GetString("room_id");
+                    //int number = reader.GetInt32("room_number");
+                    //String type = reader.GetString("type");
                     Room newRoom = null;
-                    if (type == typeof(PrivateRoom).ToString())
-                        newRoom = new PrivateRoom { ID = room_id, RoomNumber = number };
-                    else if (type == typeof(SemiPrivateRoom).ToString())
-                        newRoom = new SemiPrivateRoom { ID = room_id, RoomNumber = number };
-                    else if (type == typeof(StandardWard).ToString())
-                        newRoom = new StandardWard { ID = room_id, RoomNumber = number };
+                    //if (type == typeof(PrivateRoom).ToString())
+                    //    newRoom = new PrivateRoom { ID = room_id, RoomNumber = number };
+                    //else if (type == typeof(SemiPrivateRoom).ToString())
+                    //    newRoom = new SemiPrivateRoom { ID = room_id, RoomNumber = number };
+                    //else if (type == typeof(StandardWard).ToString())
+                    //    newRoom = new StandardWard { ID = room_id, RoomNumber = number };
 
                     rooms.Add(newRoom);
                 }
@@ -149,13 +149,13 @@ namespace HMS.WPF.Services
                 {
                     doctors.Add(new Doctor
                     {
-                        ID = reader.GetString("doctor_id"),
-                        Name = reader.GetString("name"),
-                        BirthDate = reader.GetDateTime("birth_date"),
-                        Address = reader.GetString("address"),
-                        EmploymentDate = reader.GetDateTime("employment_date"),
-                        Salary = reader.GetFloat("salary"),
-                        IsHead = reader.GetBoolean("is_head")
+                        //ID = reader.GetString("doctor_id"),
+                        //Name = reader.GetString("name"),
+                        //BirthDate = reader.GetDateTime("birth_date"),
+                        //Address = reader.GetString("address"),
+                        //EmploymentDate = reader.GetDateTime("employment_date"),
+                        //Salary = reader.GetFloat("salary"),
+                        //IsHead = reader.GetBoolean("is_head")
                     });
                 }
             }
@@ -185,12 +185,12 @@ namespace HMS.WPF.Services
                 {
                     nurses.Add(new Nurse
                     {
-                        ID = reader.GetString("nurse_id"),
-                        Name = reader.GetString("name"),
-                        BirthDate = reader.GetDateTime("birth_date"),
-                        Address = reader.GetString("address"),
-                        EmploymentDate = reader.GetDateTime("employment_date"),
-                        Salary = reader.GetFloat("salary")
+                        //ID = reader.GetString("nurse_id"),
+                        //Name = reader.GetString("name"),
+                        //BirthDate = reader.GetDateTime("birth_date"),
+                        //Address = reader.GetString("address"),
+                        //EmploymentDate = reader.GetDateTime("employment_date"),
+                        //Salary = reader.GetFloat("salary")
                     });
                 }
             }
@@ -254,7 +254,7 @@ namespace HMS.WPF.Services
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    rooms.Add(reader.GetString("room_id"));
+                    //rooms.Add(reader.GetString("room_id"));
                 }
             }
             catch
@@ -283,12 +283,12 @@ namespace HMS.WPF.Services
                 {
                     patients.Add(new ResidentPatient
                     {
-                        ID = reader.GetString("patient_id"),
-                        Name = reader.GetString("name"),
-                        BirthDate = reader.GetDateTime("birth_date"),
-                        Address = reader.GetString("address"),
-                        Diagnosis = reader.GetString("diagnosis"),
-                        EntryDate = reader.GetDateTime("entry_date")
+                        //ID = reader.GetString("patient_id"),
+                        //Name = reader.GetString("name"),
+                        //BirthDate = reader.GetDateTime("birth_date"),
+                        //Address = reader.GetString("address"),
+                        //Diagnosis = reader.GetString("diagnosis"),
+                        //EntryDate = reader.GetDateTime("entry_date")
                     });
                 }
             }
@@ -345,11 +345,11 @@ namespace HMS.WPF.Services
                 {
                     patients.Add(new AppointmentPatient
                     {
-                        ID = reader.GetString("patient_id"),
-                        Name = reader.GetString("name"),
-                        BirthDate = reader.GetDateTime("birth_date"),
-                        Address = reader.GetString("address"),
-                        Diagnosis = reader.GetString("diagnosis"),
+                        //ID = reader.GetString("patient_id"),
+                        //Name = reader.GetString("name"),
+                        //BirthDate = reader.GetDateTime("birth_date"),
+                        //Address = reader.GetString("address"),
+                        //Diagnosis = reader.GetString("diagnosis"),
                     });
                 }
             }
@@ -380,11 +380,11 @@ namespace HMS.WPF.Services
                 {
                     patients.Add(new AppointmentPatient
                     {
-                        ID = reader.GetString("patient_id"),
-                        Name = reader.GetString("name"),
-                        BirthDate = reader.GetDateTime("birth_date"),
-                        Address = reader.GetString("address"),
-                        Diagnosis = reader.GetString("diagnosis"),
+                        //ID = reader.GetString("patient_id"),
+                        //Name = reader.GetString("name"),
+                        //BirthDate = reader.GetDateTime("birth_date"),
+                        //Address = reader.GetString("address"),
+                        //Diagnosis = reader.GetString("diagnosis"),
                     });
                 }
             }
@@ -424,10 +424,10 @@ namespace HMS.WPF.Services
                 {
                     medicine.Add(new Medicine
                     {
-                        ID = reader.GetString("medicine_id"),
-                        Name = reader.GetString("name"),
-                        StartingDate = reader.GetDateTime("starting_date"),
-                        EndingDate = reader.GetDateTime("ending_date")
+                        //ID = reader.GetString("medicine_id"),
+                        //Name = reader.GetString("name"),
+                        //StartingDate = reader.GetDateTime("starting_date"),
+                        //EndingDate = reader.GetDateTime("ending_date")
                     });
                 }
             }
@@ -457,10 +457,10 @@ namespace HMS.WPF.Services
                 {
                     medicine.Add(new Medicine
                     {
-                        ID = reader.GetString("medicine_id"),
-                        Name = reader.GetString("name"),
-                        StartingDate = reader.GetDateTime("starting_date"),
-                        EndingDate = reader.GetDateTime("ending_date")
+                        //ID = reader.GetString("medicine_id"),
+                        //Name = reader.GetString("name"),
+                        //StartingDate = reader.GetDateTime("starting_date"),
+                        //EndingDate = reader.GetDateTime("ending_date")
                     });
                 }
             }
@@ -491,9 +491,9 @@ namespace HMS.WPF.Services
                 {
                     appointments.Add(new Appointment
                     {
-                        ID = reader.GetString("appointment_id"),
-                        Date = reader.GetDateTime("date"),
-                        Duration = reader.GetInt32("duration")
+                        //ID = reader.GetString("appointment_id"),
+                        //Date = reader.GetDateTime("date"),
+                        //Duration = reader.GetInt32("duration")
                     });
                 }
             }
@@ -568,7 +568,7 @@ namespace HMS.WPF.Services
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    doctorsID.Add(reader.GetString("doctor_id"));
+                    //doctorsID.Add(reader.GetString("doctor_id"));
                 }
             }
             catch

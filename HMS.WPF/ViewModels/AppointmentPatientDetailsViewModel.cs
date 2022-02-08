@@ -78,7 +78,7 @@ namespace HMS.WPF.ViewModels
             }
 
             HospitalDB.UpdatePatient(Hospital.Patients[PatientID]);
-            Home.ViewModel.CloseRootDialog();
+            //Home.ViewModel.CloseRootDialog();
         }
 
         public async void DeleteAppointmentPatient()
@@ -89,7 +89,7 @@ namespace HMS.WPF.ViewModels
                 // Delete Logic Here
                 HospitalDB.DeletePatient(PatientID);
                 Hospital.DeletePatient(PatientID);
-                Home.ViewModel.Content = new PatientsViewModel();
+                //Home.ViewModel.Content = new PatientsViewModel();
             }
         }
     }

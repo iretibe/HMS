@@ -20,28 +20,28 @@ namespace HMS.WPF.ViewModels
 
         public void navigateToDetails()
         {
-            if (Hospital.Patients[ID].GetType() == typeof(ResidentPatient))
-                Home.ViewModel.Content = new ResidentPatientDetailsViewModel(ID)
-                {
-                    PatientName = Hospital.Patients[ID].Name,
-                    PatientAddress = Hospital.Patients[ID].Address,
-                    PatientBirthDate = Hospital.Patients[ID].BirthDate.ToShortDateString(),
-                    PatientBill = Hospital.Patients[ID].getBill().ToString(),
-                    PatientDiagnosis = Hospital.Patients[ID].Diagnosis,
-                    PatientRoomNumber = ((ResidentPatient)(Hospital.Patients[ID])).Room.RoomNumber.ToString(),
-                    PatientType = "Resident Patient",
-                };
-            else
-            {
-                Home.ViewModel.Content = new AppointmentPatientDetailsViewModel(ID)
-                {
-                    PatientName = Hospital.Patients[ID].Name,
-                    PatientAddress = Hospital.Patients[ID].Address,
-                    PatientBirthDate = Hospital.Patients[ID].BirthDate.ToShortDateString(),
-                    PatientDiagnosis = Hospital.Patients[ID].Diagnosis,
-                    PatientType = "Appointment Patient",
-                };
-            }
+            //if (Hospital.Patients[ID].GetType() == typeof(ResidentPatient))
+                //Home.ViewModel.Content = new ResidentPatientDetailsViewModel(ID)
+                //{
+                //    PatientName = Hospital.Patients[ID].Name,
+                //    PatientAddress = Hospital.Patients[ID].Address,
+                //    PatientBirthDate = Hospital.Patients[ID].BirthDate.ToShortDateString(),
+                //    PatientBill = Hospital.Patients[ID].getBill().ToString(),
+                //    PatientDiagnosis = Hospital.Patients[ID].Diagnosis,
+                //    PatientRoomNumber = ((ResidentPatient)(Hospital.Patients[ID])).Room.RoomNumber.ToString(),
+                //    PatientType = "Resident Patient",
+                //};
+            //else
+            //{
+                //Home.ViewModel.Content = new AppointmentPatientDetailsViewModel(ID)
+                //{
+                //    PatientName = Hospital.Patients[ID].Name,
+                //    PatientAddress = Hospital.Patients[ID].Address,
+                //    PatientBirthDate = Hospital.Patients[ID].BirthDate.ToShortDateString(),
+                //    PatientDiagnosis = Hospital.Patients[ID].Diagnosis,
+                //    PatientType = "Appointment Patient",
+                //};
+            //}
         }
     }
 }

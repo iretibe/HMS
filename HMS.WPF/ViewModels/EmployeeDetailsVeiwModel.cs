@@ -283,7 +283,7 @@ namespace HMS.WPF.ViewModels
                 HospitalDB.UpdateNurse((Nurse)Hospital.Employees[EmployeeID]);
             }
 
-            Home.ViewModel.CloseRootDialog();
+            //Home.ViewModel.CloseRootDialog();
         }
 
         public async void DeleteEmployee()
@@ -301,15 +301,15 @@ namespace HMS.WPF.ViewModels
                     
                     HospitalDB.DeleteDoctor(EmployeeID);
                     Hospital.DeleteDoctor(EmployeeID);
-                    Home.ViewModel.CloseRootDialog();
-                    Home.ViewModel.Content = new EmployeesViewModel();
+                    //Home.ViewModel.CloseRootDialog();
+                    //Home.ViewModel.Content = new EmployeesViewModel();
                 }
                 else
                 {
                     HospitalDB.DeleteNurse(EmployeeID);
                     Hospital.DeleteNurse(EmployeeID);
-                    Home.ViewModel.CloseRootDialog();
-                    Home.ViewModel.Content = new EmployeesViewModel();
+                    //Home.ViewModel.CloseRootDialog();
+                    //Home.ViewModel.Content = new EmployeesViewModel();
                 }
             }
         }
@@ -396,7 +396,7 @@ namespace HMS.WPF.ViewModels
                 }
 
                 PatientsComboBox.Remove(PatientComboBox);
-                Home.ViewModel.CloseRootDialog();
+                //Home.ViewModel.CloseRootDialog();
             }
         }
 
@@ -417,7 +417,7 @@ namespace HMS.WPF.ViewModels
             }
 
             RoomsComboBox.Remove(RoomComboBox);
-            Home.ViewModel.CloseRootDialog();
+            //Home.ViewModel.CloseRootDialog();
         }
     }
 }

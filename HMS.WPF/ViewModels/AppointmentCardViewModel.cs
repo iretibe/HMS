@@ -27,7 +27,7 @@ namespace HMS.WPF.ViewModels
             object result = await DialogHost.Show(new DeleteMessageBox(), "RootDialog");
             if (result.Equals(true))
             {
-                ((AppointmentsViewModel)Home.ViewModel.Content).DeleteAppointment(ID);
+                //((AppointmentsViewModel)Home.ViewModel.Content).DeleteAppointment(ID);
             }
         }
     }

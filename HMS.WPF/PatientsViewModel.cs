@@ -179,7 +179,7 @@ namespace HMS.WPF
                 HospitalDB.InsertPatient(newPatient);
             }
 
-            Home.ViewModel.CloseRootDialog();
+            //Home.ViewModel.CloseRootDialog();
         }
     }
 }

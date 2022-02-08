@@ -23,7 +23,7 @@ namespace HMS.WPF.ViewModels
         public void navigateToDetails()
         {
             //Open Deprtment Details Page
-            Home.ViewModel.Content = new DepartmentDetailsViewModel(ID);
+            //Home.ViewModel.Content = new DepartmentDetailsViewModel(ID);
         }
     }
 }

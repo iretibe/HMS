@@ -53,8 +53,8 @@ namespace HMS.WPF.Models
                 AppointmentHourPrice = 40
             };
 
-            Home.ViewModel.Content = new LoadingViewModel();
-            Home.ViewModel.IsLoading = true;
+            //Home.ViewModel.Content = new LoadingViewModel();
+            //Home.ViewModel.IsLoading = true;
 
             await Task.Run(() =>
             {
@@ -66,8 +66,8 @@ namespace HMS.WPF.Models
                 InitializeAppointments();
             });
 
-            Home.ViewModel.IsLoading = false;
-            Home.ViewModel.GoBack();
+            //Home.ViewModel.IsLoading = false;
+            //Home.ViewModel.GoBack();
         }
 
         public static void InitializeDepartments()
