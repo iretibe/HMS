@@ -15,7 +15,7 @@ namespace HMS.WPF.ViewModels
         //Details View Properites
         public String EmployeeID;
 
-        // Main Page
+        //Main Page
         public String EmployeeName { get; set; }
         public String EmployeeAddress { get; set; }
         public String EmployeeBirthDate { get; set; }
@@ -23,7 +23,7 @@ namespace HMS.WPF.ViewModels
         public String EmployeeEmploymentDate { get; set; }
         public String EmployeeSalary { get; set; }
 
-        // Main Lists
+        //Main Lists
         public ObservableCollection<ComboBoxPairs> PatientsList { get; set; }
         public ObservableCollection<ComboBoxPairs> AppointmentsList { get; set; }
         public ObservableCollection<ComboBoxPairs> RoomsList { get; set; }
@@ -79,6 +79,7 @@ namespace HMS.WPF.ViewModels
                 employeeRole = value;
             }
         }
+
         public EmployeeDetailsVeiwModel()
         {
 
@@ -283,7 +284,7 @@ namespace HMS.WPF.ViewModels
                 HospitalDB.UpdateNurse((Nurse)Hospital.Employees[EmployeeID]);
             }
 
-            //Home.ViewModel.CloseRootDialog();
+            Home.ViewModel.CloseRootDialog();
         }
 
         public async void DeleteEmployee()
@@ -301,15 +302,15 @@ namespace HMS.WPF.ViewModels
                     
                     HospitalDB.DeleteDoctor(EmployeeID);
                     Hospital.DeleteDoctor(EmployeeID);
-                    //Home.ViewModel.CloseRootDialog();
-                    //Home.ViewModel.Content = new EmployeesViewModel();
+                    Home.ViewModel.CloseRootDialog();
+                    Home.ViewModel.Content = new EmployeesViewModel();
                 }
                 else
                 {
                     HospitalDB.DeleteNurse(EmployeeID);
                     Hospital.DeleteNurse(EmployeeID);
-                    //Home.ViewModel.CloseRootDialog();
-                    //Home.ViewModel.Content = new EmployeesViewModel();
+                    Home.ViewModel.CloseRootDialog();
+                    Home.ViewModel.Content = new EmployeesViewModel();
                 }
             }
         }
@@ -396,7 +397,7 @@ namespace HMS.WPF.ViewModels
                 }
 
                 PatientsComboBox.Remove(PatientComboBox);
-                //Home.ViewModel.CloseRootDialog();
+                Home.ViewModel.CloseRootDialog();
             }
         }
 
@@ -417,7 +418,7 @@ namespace HMS.WPF.ViewModels
             }
 
             RoomsComboBox.Remove(RoomComboBox);
-            //Home.ViewModel.CloseRootDialog();
+            Home.ViewModel.CloseRootDialog();
         }
     }
 }

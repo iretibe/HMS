@@ -75,7 +75,7 @@ namespace HMS.WPF.ViewModels
             DepartmentName = EditDepartmentName;
             Hospital.Departments[DepartmentId].Name = EditDepartmentName;
             HospitalDB.UpdateDepartment(Hospital.Departments[DepartmentId]);
-            //Home.ViewModel.CloseRootDialog();
+            Home.ViewModel.CloseRootDialog();
         }
 
         public async void DeleteDepartments()
@@ -86,7 +86,7 @@ namespace HMS.WPF.ViewModels
             {
                 Hospital.DeleteDepartment(DepartmentId);
                 HospitalDB.DeleteDepartment(DepartmentId);
-                //Home.ViewModel.Content = new DepartmentsViewModel();
+                Home.ViewModel.Content = new DepartmentsViewModel();
             }
         }
     }

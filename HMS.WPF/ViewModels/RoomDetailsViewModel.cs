@@ -34,8 +34,6 @@ namespace HMS.WPF.ViewModels
         public ICommand DeleteRoom { get; set; }
         public ICommand assignNurse { get; set; }
 
-
-
         public RoomDetailsViewModel(String ID)
         {
             RoomID = ID;
@@ -77,6 +75,7 @@ namespace HMS.WPF.ViewModels
                     NursesComboBoxItems.Add(new ComboBoxPairs(nurse.ID, nurse.Name));
                 }
             }
+
             PatientsNumber = $"Patients : {PatientsList.Count}";
             NursesNumber = $"Nurses : {NursesList.Count}";
         }
@@ -109,7 +108,7 @@ namespace HMS.WPF.ViewModels
                 RoomNumber = editedRoomNumber;
                 Hospital.Rooms[RoomID].RoomNumber = int.Parse(editedRoomNumber);
                 HospitalDB.UpdateRoom(Hospital.Rooms[RoomID]);
-                //Home.ViewModel.CloseRootDialog();
+                Home.ViewModel.CloseRootDialog();
             }
         }
 
@@ -119,7 +118,7 @@ namespace HMS.WPF.ViewModels
             if (result.Equals(true))
             {
                 Hospital.DeleteRoom(RoomID);
-                //Home.ViewModel.Content = new RoomsViewModel();
+                Home.ViewModel.Content = new RoomsViewModel();
                 HospitalDB.DeleteRoom(RoomID);
             }
         }
@@ -145,7 +144,7 @@ namespace HMS.WPF.ViewModels
 
         public void AssignNurse()
         {
-            //Home.ViewModel.CloseRootDialog();
+            Home.ViewModel.CloseRootDialog();
 
             NursesList.Add(new ComboBoxPairs(NurseSelectedItem.Key, NurseSelectedItem.Value));
 

@@ -53,7 +53,6 @@ namespace HMS.WPF.ViewModels
             FilteredRooms = new ObservableCollection<RoomCardViewModel>(Rooms);
         }
 
-
         private void Search()
         {
             if (String.IsNullOrEmpty(SearchQuery))

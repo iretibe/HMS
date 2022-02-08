@@ -1,3 +1,4 @@
+using HMS.WPF.Data;
 using HMS.WPF.Services;
 using HMS.WPF.ViewModels;
 using System;
@@ -23,6 +24,7 @@ namespace HMS.WPF.Models
             Appointments = new Dictionary<String, Appointment>();
             Departments = new Dictionary<String, Department>();
             Rooms = new Dictionary<String, Room>();
+
             Config = new Config
             {
                 StandardWardCapacity = 4,
@@ -53,8 +55,8 @@ namespace HMS.WPF.Models
                 AppointmentHourPrice = 40
             };
 
-            //Home.ViewModel.Content = new LoadingViewModel();
-            //Home.ViewModel.IsLoading = true;
+            Home.ViewModel.Content = new LoadingViewModel();
+            Home.ViewModel.IsLoading = true;
 
             await Task.Run(() =>
             {
@@ -66,8 +68,8 @@ namespace HMS.WPF.Models
                 InitializeAppointments();
             });
 
-            //Home.ViewModel.IsLoading = false;
-            //Home.ViewModel.GoBack();
+            Home.ViewModel.IsLoading = false;
+            Home.ViewModel.GoBack();
         }
 
         public static void InitializeDepartments()
@@ -76,7 +78,7 @@ namespace HMS.WPF.Models
             foreach (Department department in departmentList)
             {
                 if (department != null)
-                    Departments.Add(department.ID, department);
+                    Departments.Add(Guid.NewGuid().ToString(), department);
             }
         }
 
@@ -85,7 +87,7 @@ namespace HMS.WPF.Models
             List<Room> roomList = HospitalDB.FetchRooms();
             foreach (Room room in roomList)
             {
-                Rooms.Add(room.ID, room);
+                Rooms.Add(Guid.NewGuid().ToString(), room);
             }
         }
 
@@ -94,8 +96,8 @@ namespace HMS.WPF.Models
             List<Doctor> doctorList = HospitalDB.FetchDoctors();
             foreach (Doctor doctor in doctorList)
             {
-                // Fetching Doctor's Department
-                String departmentID = HospitalDB.FetchPersonDepartment(doctor.ID);
+                //Fetching Doctor's Department
+                string departmentID = HospitalDB.FetchPersonDepartment(doctor.DoctorID.ToString());
 
                 // Assigning Doctor to his Department
                 if (Departments.ContainsKey(departmentID))
@@ -113,6 +115,7 @@ namespace HMS.WPF.Models
             }
 
             List<Nurse> nurseList = HospitalDB.FetchNurses();
+
             foreach (Nurse nurse in nurseList)
             {
                 // Fetching Nurse's Department
@@ -236,7 +239,7 @@ namespace HMS.WPF.Models
             }
             if (Hospital.Employees[DoctorId].Department != null)
             {
-                
+
                 Hospital.Employees[DoctorId].Department.removeDoctor(DoctorId);
                 Hospital.Employees[DoctorId].Department = null;
             }
@@ -256,12 +259,12 @@ namespace HMS.WPF.Models
         public static void DeleteRoom(String RoomId)
         {
             List<Nurse> nurses = new List<Nurse>(Rooms[RoomId].Nurses.Values);
-            foreach(Nurse nurse in nurses )
+            foreach (Nurse nurse in nurses)
             {
                 nurse.removeRoom(RoomId);
             }
             List<Patient> pats = new List<Patient>(Rooms[RoomId].Patients.Values);
-            foreach (Patient patient in pats )
+            foreach (Patient patient in pats)
             {
                 if (patient.GetType() == typeof(ResidentPatient))
                 {
@@ -275,25 +278,25 @@ namespace HMS.WPF.Models
         public static void DeletePatient(String PatientId)
         {
             List<Doctor> drs = new List<Doctor>(Patients[PatientId].Doctors.Values);
-            foreach(Doctor doctor in drs)
+            foreach (Doctor doctor in drs)
             {
                 doctor.removePatient(PatientId);
             }
-            if(Patients[PatientId].GetType()==typeof(AppointmentPatient))
+            if (Patients[PatientId].GetType() == typeof(AppointmentPatient))
             {
                 List<Appointment> appointments = new List<Appointment>(((AppointmentPatient)Patients[PatientId]).Appointments.Values);
-                foreach(Appointment appointment in appointments)
+                foreach (Appointment appointment in appointments)
                 {
                     appointment.cancel();
                 }
             }
             else
             {
-                foreach(Nurse nurse in ((ResidentPatient)Patients[PatientId]).Room.Nurses.Values)
+                foreach (Nurse nurse in ((ResidentPatient)Patients[PatientId]).Room.Nurses.Values)
                 {
                     nurse.removePatient(PatientId);
                 }
-                ((ResidentPatient)Patients[PatientId]).Room.Patients.Remove(PatientId);                
+                ((ResidentPatient)Patients[PatientId]).Room.Patients.Remove(PatientId);
             }
 
             Patients.Remove(PatientId);
@@ -302,7 +305,7 @@ namespace HMS.WPF.Models
         public static void DeleteDepartment(String DepartmentId)
         {
             List<Patient> pats = new List<Patient>(Departments[DepartmentId].Patients.Values);
-            foreach (Patient patient in pats )
+            foreach (Patient patient in pats)
             {
                 if (patient.GetType() == typeof(ResidentPatient))
                 {
@@ -310,12 +313,12 @@ namespace HMS.WPF.Models
                 }
             }
             List<Doctor> drs = new List<Doctor>(Departments[DepartmentId].Doctors.Values);
-            foreach(Doctor doctor in drs )
+            foreach (Doctor doctor in drs)
             {
                 doctor.Department = null;
             }
             List<Nurse> nurses = new List<Nurse>(Departments[DepartmentId].Nurse.Values);
-            foreach(Nurse nurse in nurses)
+            foreach (Nurse nurse in nurses)
             {
                 nurse.Department = null;
             }
@@ -323,11 +326,11 @@ namespace HMS.WPF.Models
             Departments.Remove(DepartmentId);
         }
 
-       public static void DeleteAppointment(String AppointmentId)
-       {
+        public static void DeleteAppointment(String AppointmentId)
+        {
             Appointments[AppointmentId].cancel();
             Appointments.Remove(AppointmentId);
-       }
+        }
     }
 
     class Config

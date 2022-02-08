@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HMSDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Appointment">
+    <Key>
+      <PropertyRef Name="AppointmentID" />
+    </Key>
+    <Property Name="AppointmentID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="DoctorID" Type="uniqueidentifier" />
+    <Property Name="Duration" Type="int" />
+  </EntityType>
+  <EntityType Name="AppointmentPatient">
+    <Key>
+      <PropertyRef Name="AppointmentPatientID" />
+    </Key>
+    <Property Name="AppointmentPatientID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="BirthDate" Type="datetime" />
+    <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Diagnosis" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="DepartmentId" />
+    </Key>
+    <Property Name="DepartmentId" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Doctor">
+    <Key>
+      <PropertyRef Name="DoctorID" />
+    </Key>
+    <Property Name="DoctorID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="BirthDate" Type="datetime" />
+    <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="EmploymentDate" Type="datetime" />
+    <Property Name="DepartmentID" Type="uniqueidentifier" />
+    <Property Name="Salary" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="isHead" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DoctorPatient">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="DoctorID" Type="uniqueidentifier" />
+    <Property Name="PatientID" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Salary" Type="decimal" Precision="18" Scale="2" />
+    <Property Name="EmploymentDate" Type="datetime" />
+    <Property Name="DepartmentID" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="Medicine">
+    <Key>
+      <PropertyRef Name="MedecineID" />
+    </Key>
+    <Property Name="MedecineID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="StartingDate" Type="datetime" />
+    <Property Name="EndingDate" Type="datetime" />
+    <Property Name="PatientID" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="Nurse">
+    <Key>
+      <PropertyRef Name="NurseID" />
+    </Key>
+    <Property Name="NurseID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="BirthDate" Type="datetime" />
+    <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="EmploymentDate" Type="datetime" />
+    <Property Name="DepartmentID" Type="uniqueidentifier" />
+    <Property Name="Salary" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="NurseRoom">
+    <Key>
+      <PropertyRef Name="NurseRoomID" />
+    </Key>
+    <Property Name="NurseRoomID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="NurseID" Type="uniqueidentifier" />
+    <Property Name="RoomID" Type="uniqueidentifier" />
+  </EntityType>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="PatientID" />
+    </Key>
+    <Property Name="PatientID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="BirthDate" Type="datetime" />
+    <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="Diagnosis" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Person">
+    <Key>
+      <PropertyRef Name="PatientID" />
+    </Key>
+    <Property Name="PatientID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="BirthDate" Type="datetime" />
+    <Property Name="Address" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="ResidentPatient">
+    <Key>
+      <PropertyRef Name="ResidentPatientID" />
+    </Key>
+    <Property Name="ResidentPatientID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="BirthDate" Type="datetime" />
+    <Property Name="Address" Type="nvarchar(max)" />
+    <Property Name="Diagnosis" Type="nvarchar(max)" />
+    <Property Name="EntryDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Room">
+    <Key>
+      <PropertyRef Name="RoomID" />
+    </Key>
+    <Property Name="RoomID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="RoomNumber" Type="int" Nullable="false" />
+    <Property Name="RoomType" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="HMSDBModelStoreContainer">
+    <EntitySet Name="Appointment" EntityType="Self.Appointment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AppointmentPatient" EntityType="Self.AppointmentPatient" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Doctor" EntityType="Self.Doctor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DoctorPatient" EntityType="Self.DoctorPatient" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Medicine" EntityType="Self.Medicine" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Nurse" EntityType="Self.Nurse" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NurseRoom" EntityType="Self.NurseRoom" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ResidentPatient" EntityType="Self.ResidentPatient" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Room" EntityType="Self.Room" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

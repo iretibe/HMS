@@ -7,7 +7,7 @@ namespace HMS.WPF.ViewModels
 {
     public class AppointmentCardViewModel : BaseViewModel
     {
-        public String ID { get; set; }
+        public string ID { get; set; }
         public String PatientName { get; set; }
         public String DoctorName { get; set; }
         public String AppointmentDate { get; set; }
@@ -23,11 +23,11 @@ namespace HMS.WPF.ViewModels
 
         public async void DeleteAppointment()
         {
-            // ((AppointmentsViewModel)Home.ViewModel.Content).FilteredAppointments.Clear();
+            ((AppointmentsViewModel)Home.ViewModel.Content).FilteredAppointments.Clear();
             object result = await DialogHost.Show(new DeleteMessageBox(), "RootDialog");
             if (result.Equals(true))
             {
-                //((AppointmentsViewModel)Home.ViewModel.Content).DeleteAppointment(ID);
+                ((AppointmentsViewModel)Home.ViewModel.Content).DeleteAppointment(ID);
             }
         }
     }

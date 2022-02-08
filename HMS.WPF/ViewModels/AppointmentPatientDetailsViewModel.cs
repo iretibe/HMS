@@ -19,7 +19,8 @@ namespace HMS.WPF.ViewModels
         public String PatientDiagnosis { get; set; }
         public String PatientBill { get; set; }
         public String textValidation { get; set; }
-        // Edit
+
+        //Edit
         public ICommand editAppointmentPatient { get; set; }
         public ICommand deleteAppointmentPatient { get; set; }
         public String EditPatientNameTextBox { get; set; }
@@ -28,7 +29,7 @@ namespace HMS.WPF.ViewModels
         public String EditPatientTypeComboBox { get; set; }
         public String EditPatientDiagnosisTextBox { get; set; }
 
-        // lists
+        //Lists
         public String DoctorsNumber { get; set; }
         public ObservableCollection<ComboBoxPairs> DoctorsList { get; set; }
         public ObservableCollection<ComboBoxPairs> AppointmentsList { get; set; }

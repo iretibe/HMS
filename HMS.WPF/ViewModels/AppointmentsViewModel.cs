@@ -1,5 +1,4 @@
-﻿using HMS.WPF.Models;
-using HMS.WPF.Services;
+﻿using HMS.WPF.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,16 +11,16 @@ namespace HMS.WPF.ViewModels
     {
         public String SearchQuery { get; set; }
 
-        public ComboBoxPairs PatientNameComboBox { get; set; }
-        public ComboBoxPairs DoctorNameComboBox { get; set; }
+        public Models.ComboBoxPairs PatientNameComboBox { get; set; }
+        public Models.ComboBoxPairs DoctorNameComboBox { get; set; }
         public String AppointmentDuration { get; set; }
         public DateTime AppointmentDatePicker { get; set; }
         public DateTime AppointmentTimePicker { get; set; }
         public String datePickerString { get; set; }
         public String timePickerString { get; set; }
         public String textValidation { get; set; }
-        public List<ComboBoxPairs> patientsComboBoxItems;
-        public List<ComboBoxPairs> doctorsComboBoxItems;
+        public List<Models.ComboBoxPairs> patientsComboBoxItems;
+        public List<Models.ComboBoxPairs> doctorsComboBoxItems;
 
         public ICommand SearchAction { get; set; }
 
@@ -63,7 +62,7 @@ namespace HMS.WPF.ViewModels
 
             bool foundPatient = false, foundDoctor = false;
 
-            foreach (Patient patient in Hospital.Patients.Values)
+            foreach (var patient in Models.Hospital.Patients.Values)
             {
                 if (patient.GetType() == typeof(AppointmentPatient) && PatientNameComboBox.Value == patient.Name)
                 {
@@ -71,7 +70,7 @@ namespace HMS.WPF.ViewModels
                 }
             }
 
-            foreach (Employee employee in Hospital.Employees.Values)
+            foreach (var employee in Models.Hospital.Employees.Values)
             {
                 if (employee.GetType() == typeof(Doctor) && DoctorNameComboBox.Value == employee.Name)
                 {
@@ -83,6 +82,7 @@ namespace HMS.WPF.ViewModels
             {
                 return false;
             }
+
             return true;
         }
 
@@ -90,35 +90,35 @@ namespace HMS.WPF.ViewModels
         {
             AppointmentDatePicker = DateTime.Today;
 
-            patientsComboBoxItems = new List<ComboBoxPairs>();
-            doctorsComboBoxItems = new List<ComboBoxPairs>();
+            patientsComboBoxItems = new List<Models.ComboBoxPairs>();
+            doctorsComboBoxItems = new List<Models.ComboBoxPairs>();
 
             SearchAction = new RelayCommand(Search);
 
-            foreach (Patient patient in Hospital.Patients.Values)
+            foreach (var patient in Models.Hospital.Patients.Values)
             {
                 if (patient.GetType() == typeof(AppointmentPatient))
                 {
-                    patientsComboBoxItems.Add(new ComboBoxPairs(patient.ID, patient.Name));
+                    patientsComboBoxItems.Add(new Models.ComboBoxPairs(patient.ID, patient.Name));
                 }
             }
 
-            foreach (Employee employee in Hospital.Employees.Values)
+            foreach (var employee in Models.Hospital.Employees.Values)
             {
                 if (employee.GetType() == typeof(Doctor))
                 {
-                    doctorsComboBoxItems.Add(new ComboBoxPairs(employee.ID, employee.Name));
+                    doctorsComboBoxItems.Add(new Models.ComboBoxPairs(employee.ID, employee.Name));
                 }
             }
 
             Appointments = new ObservableCollection<AppointmentCardViewModel>();
 
-            foreach (Appointment appointment in Hospital.Appointments.Values)
+            foreach (var appointment in Models.Hospital.Appointments.Values)
             {
                 Appointments.Add(
                     new AppointmentCardViewModel
                     {
-                        ID = appointment.ID,
+                        ID = appointment.AppointmentID.ToString(),
                         PatientName = appointment.Patient.Name,
                         DoctorName = appointment.Doctor.Name,
                         Duration = appointment.Duration.ToString() + " mins",
@@ -133,8 +133,8 @@ namespace HMS.WPF.ViewModels
 
         public void DeleteAppointment(String ID)
         {
-            Hospital.Appointments[ID].Doctor.removePatient(Hospital.Appointments[ID].Patient.ID);
-            Hospital.DeleteAppointment(ID);
+            Models.Hospital.Appointments[ID].Doctor.removePatient(Models.Hospital.Appointments[ID].Patient.ID);
+            Models.Hospital.DeleteAppointment(ID);
             
             for (int i = 0; i < FilteredAppointments.Count; ++i)
             {
@@ -154,7 +154,7 @@ namespace HMS.WPF.ViewModels
                 }
             }
 
-            HospitalDB.DeleteAppointment(ID);
+            Services.HospitalDB.DeleteAppointment(ID);
         }
 
         public void Search()
@@ -178,15 +178,14 @@ namespace HMS.WPF.ViewModels
             
             Appointment newAppointment = new Appointment
             {
-
-                Patient = (AppointmentPatient)Hospital.Patients[PatientNameComboBox.Key],
-                Doctor = (Doctor)Hospital.Employees[DoctorNameComboBox.Key],
+                Patient = (AppointmentPatient)Models.Hospital.Patients[PatientNameComboBox.Key],
+                Doctor = (Doctor)Models.Hospital.Employees[DoctorNameComboBox.Key],
                 Duration = Int32.Parse(AppointmentDuration),
                 Date = DateTime.Parse(datePickerString),
-                Bill = ((double.Parse(AppointmentDuration) / 60.0)) * Hospital.Config.AppointmentHourPrice
+                Bill = ((double.Parse(AppointmentDuration) / 60.0)) * Models.Hospital.Config.AppointmentHourPrice
             };
 
-            if (!(((Doctor)Hospital.Employees[DoctorNameComboBox.Key]).isAvailable(newAppointment)))
+            if (!(((Doctor)Models.Hospital.Employees[DoctorNameComboBox.Key]).isAvailable(newAppointment)))
             {
                 textValidation = "Doctor is not available at this time";
                 return;
@@ -195,7 +194,7 @@ namespace HMS.WPF.ViewModels
             Appointments.Add(
                 new AppointmentCardViewModel
                 {
-                    ID = newAppointment.ID,
+                    ID = newAppointment.AppointmentID.ToString(),
                     PatientName = newAppointment.Patient.Name,
                     DoctorName = newAppointment.Doctor.Name,
                     Duration = newAppointment.Duration.ToString(),
@@ -206,7 +205,7 @@ namespace HMS.WPF.ViewModels
             FilteredAppointments.Add(
                 new AppointmentCardViewModel
                 {
-                    ID = newAppointment.ID,
+                    ID = newAppointment.AppointmentID.ToString(),
                     PatientName = newAppointment.Patient.Name,
                     DoctorName = newAppointment.Doctor.Name,
                     Duration = newAppointment.Duration.ToString(),
@@ -214,12 +213,12 @@ namespace HMS.WPF.ViewModels
                     appointmentBill = newAppointment.Bill.ToString("0.00") + '$'
                 });
 
-            Hospital.Appointments.Add(newAppointment.ID, newAppointment);
-            Hospital.Appointments[newAppointment.ID].Patient.addAppointment(newAppointment);
-            Hospital.Appointments[newAppointment.ID].Doctor.addAppointment(newAppointment);
-            Hospital.Appointments[newAppointment.ID].Doctor.addPatient(newAppointment.Patient);
+            Models.Hospital.Appointments.Add(newAppointment.AppointmentID.ToString(), newAppointment);
+            Models.Hospital.Appointments[newAppointment.AppointmentID.ToString()].Patient.addAppointment(newAppointment);
+            Models.Hospital.Appointments[newAppointment.AppointmentID.ToString()].Doctor.addAppointment(newAppointment);
+            Models.Hospital.Appointments[newAppointment.AppointmentID.ToString()].Doctor.addPatient(newAppointment.Patient);
             HospitalDB.InsertAppointment(newAppointment);
-            //Home.ViewModel.CloseRootDialog();
+            Home.ViewModel.CloseRootDialog();
         }
     }
 }

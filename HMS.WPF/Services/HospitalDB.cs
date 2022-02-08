@@ -1,4 +1,5 @@
-﻿using HMS.WPF.Models;
+﻿using HMS.WPF.Data;
+using HMS.WPF.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -9,19 +10,16 @@ namespace HMS.WPF.Services
     {
         public static SqlConnection InitConnection()
         {
-            String connectionString = $"server={CredentialsModel.Server};" +
-                $"user id={CredentialsModel.UserID};" +
-                $"password={CredentialsModel.Password};" +
-                $"database={CredentialsModel.Database}";
-
+            string connectionString = "SERVER=PSL-DBSERVER-VM3\\DEVELOPMENT2017;DATABASE=HMSDB;user id=sa;password=Persol@123;Trusted_Connection=False;MultipleActiveResultSets=true;TrustServerCertificate=True";
+            
             return new SqlConnection(connectionString);
         }
 
         #region Fetching Operations
-        public static Config FetchConfig()
+        public static Models.Config FetchConfig()
         {
             SqlConnection con = InitConnection();
-            Config Config = new Config
+            Models.Config Config = new Models.Config
             {
                 StandardWardCapacity = 4,
                 StandardWardPrice = 50,
@@ -40,7 +38,7 @@ namespace HMS.WPF.Services
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    Config = new Config
+                    Config = new Models.Config
                     {
                         //StandardWardPrice = reader.GetFloat("standard_price"),
                         //SemiPrivateRoomPrice = reader.GetFloat("semi_price"),
@@ -71,7 +69,7 @@ namespace HMS.WPF.Services
             try
             {
                 con.Open();
-                String query = "SELECT * FROM department";
+                string query = "SELECT * FROM department";
                 SqlCommand command = new SqlCommand(query, con);
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
@@ -79,8 +77,8 @@ namespace HMS.WPF.Services
                     departments.Add(
                         new Department
                         {
-                            //ID = reader.GetString("department_id"),
-                            //Name = reader.GetString("name")
+                            DepartmentId = Guid.NewGuid(),
+                            Name = reader.GetString("name")
                         }
                     );
                 }
@@ -109,16 +107,16 @@ namespace HMS.WPF.Services
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    //String room_id = reader.GetString("room_id");
-                    //int number = reader.GetInt32("room_number");
-                    //String type = reader.GetString("type");
+                    String room_id = reader.GetString("room_id");
+                    int number = reader.GetInt32("room_number");
+                    String type = reader.GetString("type");
                     Room newRoom = null;
-                    //if (type == typeof(PrivateRoom).ToString())
-                    //    newRoom = new PrivateRoom { ID = room_id, RoomNumber = number };
-                    //else if (type == typeof(SemiPrivateRoom).ToString())
-                    //    newRoom = new SemiPrivateRoom { ID = room_id, RoomNumber = number };
-                    //else if (type == typeof(StandardWard).ToString())
-                    //    newRoom = new StandardWard { ID = room_id, RoomNumber = number };
+                    if (type == typeof(PrivateRoom).ToString())
+                        newRoom = new PrivateRoom { ID = room_id, RoomNumber = number };
+                    else if (type == typeof(SemiPrivateRoom).ToString())
+                        newRoom = new SemiPrivateRoom { ID = room_id, RoomNumber = number };
+                    else if (type == typeof(StandardWard).ToString())
+                        newRoom = new StandardWard { ID = room_id, RoomNumber = number };
 
                     rooms.Add(newRoom);
                 }
@@ -149,13 +147,13 @@ namespace HMS.WPF.Services
                 {
                     doctors.Add(new Doctor
                     {
-                        //ID = reader.GetString("doctor_id"),
-                        //Name = reader.GetString("name"),
-                        //BirthDate = reader.GetDateTime("birth_date"),
-                        //Address = reader.GetString("address"),
-                        //EmploymentDate = reader.GetDateTime("employment_date"),
-                        //Salary = reader.GetFloat("salary"),
-                        //IsHead = reader.GetBoolean("is_head")
+                        ID = reader.GetString("doctor_id"),
+                        Name = reader.GetString("name"),
+                        BirthDate = reader.GetDateTime("birth_date"),
+                        Address = reader.GetString("address"),
+                        EmploymentDate = reader.GetDateTime("employment_date"),
+                        Salary = reader.GetFloat("salary"),
+                        IsHead = reader.GetBoolean("is_head")
                     });
                 }
             }
@@ -185,12 +183,12 @@ namespace HMS.WPF.Services
                 {
                     nurses.Add(new Nurse
                     {
-                        //ID = reader.GetString("nurse_id"),
-                        //Name = reader.GetString("name"),
-                        //BirthDate = reader.GetDateTime("birth_date"),
-                        //Address = reader.GetString("address"),
-                        //EmploymentDate = reader.GetDateTime("employment_date"),
-                        //Salary = reader.GetFloat("salary")
+                        ID = reader.GetString("nurse_id"),
+                        Name = reader.GetString("name"),
+                        BirthDate = reader.GetDateTime("birth_date"),
+                        Address = reader.GetString("address"),
+                        EmploymentDate = reader.GetDateTime("employment_date"),
+                        Salary = reader.GetFloat("salary")
                     });
                 }
             }
@@ -283,12 +281,12 @@ namespace HMS.WPF.Services
                 {
                     patients.Add(new ResidentPatient
                     {
-                        //ID = reader.GetString("patient_id"),
-                        //Name = reader.GetString("name"),
-                        //BirthDate = reader.GetDateTime("birth_date"),
-                        //Address = reader.GetString("address"),
-                        //Diagnosis = reader.GetString("diagnosis"),
-                        //EntryDate = reader.GetDateTime("entry_date")
+                        ResidentPatientID = reader.GetString("patient_id"),
+                        Name = reader.GetString("name"),
+                        BirthDate = reader.GetDateTime("birth_date"),
+                        Address = reader.GetString("address"),
+                        Diagnosis = reader.GetString("diagnosis"),
+                        EntryDate = reader.GetDateTime("entry_date")
                     });
                 }
             }
@@ -636,8 +634,8 @@ namespace HMS.WPF.Services
             try
             {
                 await con.OpenAsync();
-                String query = $"INSERT INTO nurse VALUES('{nurse.ID}', '{nurse.Name}', " +
-                    $"'{nurse.BirthDate.ToString("yyyy-MM-dd")}', '{nurse.Address}', '{nurse.EmploymentDate.ToString("yyyy-MM-dd")}', '{nurse.Department.ID}'," +
+                String query = $"INSERT INTO nurse VALUES('{nurse.NurseID}', '{nurse.Name}', " +
+                    $"'{nurse.BirthDate}', '{nurse.Address}', '{nurse.EmploymentDate}', '{nurse.Department.DepartmentId}'," +
                     $"{nurse.Salary})";
                 SqlCommand command = new SqlCommand(query, con);
                 await command.ExecuteNonQueryAsync();
@@ -659,15 +657,15 @@ namespace HMS.WPF.Services
             try
             {
                 await con.OpenAsync();
-                String query = $"INSERT INTO patient VALUES('{patient.ID}', '{patient.Name}', " +
-                    $"'{patient.BirthDate.ToString("yyyy-MM-dd")}', '{patient.Address}', '{patient.Diagnosis}')";
+                String query = $"INSERT INTO patient VALUES('{patient.PatientID}', '{patient.Name}', " +
+                    $"'{patient.BirthDate}', '{patient.Address}', '{patient.Diagnosis}')";
                 SqlCommand command = new SqlCommand(query, con);
                 await command.ExecuteNonQueryAsync();
 
                 if (patient.GetType() == typeof(ResidentPatient))
                 {
-                    query = $"INSERT INTO resident_patient VALUES('{patient.ID}', '{((ResidentPatient)patient).Room.ID}', " +
-                        $"'{((ResidentPatient)patient).Department.ID}', '{((ResidentPatient)patient).EntryDate.ToString("yyy-MM-dd")}')";
+                    query = $"INSERT INTO ResidentPatient VALUES('{Guid.NewGuid()}', '{((ResidentPatient)patient.Room.Roo}', " +
+                        $"'{((ResidentPatient)patient).Department.DepartmentId}', '{((ResidentPatient)patient).EntryDate}')";
                     command = new SqlCommand(query, con);
                     await command.ExecuteNonQueryAsync();
                 }
@@ -689,7 +687,7 @@ namespace HMS.WPF.Services
             try
             {
                 await con.OpenAsync();
-                String query = $"INSERT INTO room VALUES('{room.ID}', {room.RoomNumber}, '{room.GetType()}')";
+                String query = $"INSERT INTO room VALUES('{Guid.NewGuid()}', {room.RoomNumber}, '{room.GetType()}')";
                 SqlCommand command = new SqlCommand(query, con);
                 await command.ExecuteNonQueryAsync();
             }
@@ -710,8 +708,8 @@ namespace HMS.WPF.Services
             try
             {
                 await con.OpenAsync();
-                String query = $"INSERT INTO appointment VALUES('{appointment.ID}', '{appointment.Patient.ID}', " +
-                    $"'{appointment.Doctor.ID}', '{appointment.Date.ToString("yyyy-MM-dd hh:mm:ss")}', {appointment.Duration})";
+                String query = $"INSERT INTO appointment VALUES('{appointment.AppointmentID}', '{appointment.Patient.AppointmentPatientID}', " +
+                    $"'{appointment.Doctor.DoctorID}', '{appointment.Date}', {appointment.Duration})";
                 SqlCommand command = new SqlCommand(query, con);
                 await command.ExecuteNonQueryAsync();
             }
@@ -732,8 +730,8 @@ namespace HMS.WPF.Services
             try
             {
                 await con.OpenAsync();
-                String query = $"INSERT INTO medicine VALUES('{medicine.ID}', '{medicine.Name}', " +
-                    $"'{medicine.StartingDate.ToString("yyyy-MM-dd")}', '{medicine.EndingDate.ToString("yyyy-MM-dd")}', '{patient.ID}')";
+                String query = $"INSERT INTO medicine VALUES('{medicine.MedecineID}', '{medicine.Name}', " +
+                    $"'{medicine.StartingDate}', '{medicine.EndingDate}', '{patient.PatientID}')";
                 SqlCommand command = new SqlCommand(query, con);
                 await command.ExecuteNonQueryAsync();
             }
@@ -825,7 +823,7 @@ namespace HMS.WPF.Services
             try
             {
                 await con.OpenAsync();
-                String query = $"UPDATE department SET name = '{department.Name}' WHERE department_id = '{department.ID}'";
+                String query = $"UPDATE department SET name = '{department.Name}' WHERE DepartmentId = '{department.DepartmentId}'";
                 SqlCommand command = new SqlCommand(query, con);
                 await command.ExecuteNonQueryAsync();
             }
@@ -846,10 +844,10 @@ namespace HMS.WPF.Services
             try
             {
                 await con.OpenAsync();
-                String query = $"UPDATE doctor SET name = '{doctor.Name}', birth_date = '{doctor.BirthDate.ToString("yyyy-MM-dd")}', " +
-                    $"address = '{doctor.Address}', employment_date = '{doctor.EmploymentDate.ToString("yyyy-MM-dd")}', " +
-                    $"department_id = '{doctor.Department.ID}', salary = {doctor.Salary}, is_head = {doctor.IsHead} " +
-                    $"WHERE doctor_id = '{doctor.ID}'";
+                String query = $"UPDATE doctor SET Name = '{doctor.Name}', BirthDate = '{doctor.BirthDate}', " +
+                    $"address = '{doctor.Address}', EmploymentDate = '{doctor.EmploymentDate}', " +
+                    $"DepartmentID = '{doctor.Department.DepartmentId}', Salary = {doctor.Salary}, IsHead = {doctor.IsHead} " +
+                    $"WHERE DoctorID = '{doctor.DoctorID}'";
                 SqlCommand command = new SqlCommand(query, con);
                 await command.ExecuteNonQueryAsync();
             }
@@ -870,10 +868,10 @@ namespace HMS.WPF.Services
             try
             {
                 await con.OpenAsync();
-                String query = $"UPDATE nurse SET name = '{nurse.Name}', birth_date = '{nurse.BirthDate.ToString("yyyy-MM-dd")}', " +
-                    $"address = '{nurse.Address}', employment_date = '{nurse.EmploymentDate.ToString("yyyy-MM-dd")}', " +
-                    $"department_id = '{nurse.Department.ID}', salary = {nurse.Salary} " +
-                    $"WHERE nurse_id = '{nurse.ID}'";
+                String query = $"UPDATE Nurse SET Name = '{nurse.Name}', BirthDate = '{nurse.BirthDate}', " +
+                    $"Address = '{nurse.Address}', EmploymentDate = '{nurse.EmploymentDate}', " +
+                    $"DepartmentId = '{nurse.Department.DepartmentId}', Salary = {nurse.Salary} " +
+                    $"WHERE NurseID = '{nurse.NurseID}'";
                 SqlCommand command = new SqlCommand(query, con);
                 await command.ExecuteNonQueryAsync();
             }
@@ -894,8 +892,8 @@ namespace HMS.WPF.Services
             try
             {
                 await con.OpenAsync();
-                String query = $"UPDATE appointment SET patient_id = '{appointment.Patient.ID}', doctor_id = '{appointment.Doctor.ID}', " +
-                    $"date = '{appointment.Date.ToString("yyyy-MM-dd hh:mm:ss")}', duration = {appointment.Duration}, " +
+                String query = $"UPDATE Appointment SET PatientID = '{appointment.Patient.PatientID}', DoctorID = '{appointment.Doctor.DoctorID}', " +
+                    $"Date = '{appointment.Date.ToString("yyyy-MM-dd hh:mm:ss")}', duration = {appointment.Duration}, " +
                     $"WHERE appointment_id = '{appointment.ID}'";
                 SqlCommand command = new SqlCommand(query, con);
                 await command.ExecuteNonQueryAsync();
@@ -917,9 +915,9 @@ namespace HMS.WPF.Services
             try
             {
                 await con.OpenAsync();
-                String query = $"UPDATE patient SET name = '{patient.Name}', birth_date = '{patient.BirthDate.ToString("yyyy-MM-dd")}', " +
+                String query = $"UPDATE patient SET name = '{patient.Name}', birth_date = '{patient.BirthDate}', " +
                     $"address = '{patient.Address}', diagnosis = '{patient.Diagnosis}' " +
-                    $"WHERE patient_id = '{patient.ID}'";
+                    $"WHERE patient_id = '{patient.PatientID}'";
                 SqlCommand command = new SqlCommand(query, con);
                 await command.ExecuteNonQueryAsync();
 

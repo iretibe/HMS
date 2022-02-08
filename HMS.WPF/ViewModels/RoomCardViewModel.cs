@@ -45,13 +45,13 @@ namespace HMS.WPF.ViewModels
                 Price = Hospital.Config.StandardWardPrice.ToString();
             }
 
-            //Home.ViewModel.Content = new RoomDetailsViewModel(ID)
-            //{
-            //    RoomID = Hospital.Rooms[ID].ID,
-            //    RoomType = type,
-            //    roomCapacity = $"{Hospital.Rooms[ID].Patients.Count} / {Capacity}",
-            //    roomPrice = $"{Price}$",
-            //};
+            Home.ViewModel.Content = new RoomDetailsViewModel(ID)
+            {
+                RoomID = Hospital.Rooms[ID].ID,
+                RoomType = type,
+                roomCapacity = $"{Hospital.Rooms[ID].Patients.Count} / {Capacity}",
+                roomPrice = $"{Price}$",
+            };
         }
     }
 }

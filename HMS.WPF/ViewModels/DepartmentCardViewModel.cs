@@ -5,9 +5,7 @@ namespace HMS.WPF.ViewModels
 {
     public class DepartmentCardViewModel : BaseViewModel
     {
-        /// <summary>
-        /// Displayed Data Properties
-        /// </summary>
+        //Displayed Data Properties
         public String ID { get; set; }
         public String Name { get; set; }
         public int EmployeesNumber { get; set; }
@@ -23,7 +21,7 @@ namespace HMS.WPF.ViewModels
         public void navigateToDetails()
         {
             //Open Deprtment Details Page
-            //Home.ViewModel.Content = new DepartmentDetailsViewModel(ID);
+            Home.ViewModel.Content = new DepartmentDetailsViewModel(ID);
         }
     }
 }
