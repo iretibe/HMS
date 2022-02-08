@@ -222,7 +222,7 @@ namespace HMS.WPF.ViewModels
             NursesNumber = "Nurses:" + ((ResidentPatient)Hospital.Patients[PatientID]).Room.Nurses.Count().ToString();
 
             HospitalDB.UpdatePatient(Hospital.Patients[PatientID]);
-            Home.ViewModel.CloseRootDialog();
+            //Home.ViewModel.CloseRootDialog();
         }
 
         public async void DeleteResidentPatient()
@@ -232,8 +232,8 @@ namespace HMS.WPF.ViewModels
             {
                 Hospital.DeletePatient(PatientID);
                 HospitalDB.DeletePatient(PatientID);
-                Home.ViewModel.CloseRootDialog();
-                Home.ViewModel.Content = new PatientsViewModel();
+                //Home.ViewModel.CloseRootDialog();
+                //Home.ViewModel.Content = new PatientsViewModel();
             }
         }
 
@@ -255,7 +255,7 @@ namespace HMS.WPF.ViewModels
             
             DoctorsComboBox.Remove(DoctorComboBox);
 
-            Home.ViewModel.CloseRootDialog();
+            //Home.ViewModel.CloseRootDialog();
         }
 
         public void AddMedicine()
@@ -268,8 +268,7 @@ namespace HMS.WPF.ViewModels
             Medicine tempMedicine = ((ResidentPatient)Hospital.Patients[PatientID]).History[medicine.ID];
             MedicalHistoryList.Add(new ComboBoxPairs(medicine.ID, medicine.Name + " - Starting Date: " + medicine.StartingDate.ToShortDateString() + " | " + medicine.EndingDate.ToShortDateString()));
             HospitalDB.InsertMedicine(medicine, Hospital.Patients[PatientID]);
-            Home.ViewModel.CloseRootDialog();
-
+            //Home.ViewModel.CloseRootDialog();
         }
 
         public void RemoveDr()

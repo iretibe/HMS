@@ -90,7 +90,7 @@ namespace HMS.WPF.ViewModels
                        EmployeesNumber = newDepartment.Nurse.Count + newDepartment.Doctors.Count
                    });
 
-                Home.ViewModel.CloseRootDialog();
+                //Home.ViewModel.CloseRootDialog();
             }
             else
                 return;

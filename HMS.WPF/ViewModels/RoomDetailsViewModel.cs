@@ -109,7 +109,7 @@ namespace HMS.WPF.ViewModels
                 RoomNumber = editedRoomNumber;
                 Hospital.Rooms[RoomID].RoomNumber = int.Parse(editedRoomNumber);
                 HospitalDB.UpdateRoom(Hospital.Rooms[RoomID]);
-                Home.ViewModel.CloseRootDialog();
+                //Home.ViewModel.CloseRootDialog();
             }
         }
 
@@ -119,7 +119,7 @@ namespace HMS.WPF.ViewModels
             if (result.Equals(true))
             {
                 Hospital.DeleteRoom(RoomID);
-                Home.ViewModel.Content = new RoomsViewModel();
+                //Home.ViewModel.Content = new RoomsViewModel();
                 HospitalDB.DeleteRoom(RoomID);
             }
         }
@@ -145,7 +145,7 @@ namespace HMS.WPF.ViewModels
 
         public void AssignNurse()
         {
-            Home.ViewModel.CloseRootDialog();
+            //Home.ViewModel.CloseRootDialog();
 
             NursesList.Add(new ComboBoxPairs(NurseSelectedItem.Key, NurseSelectedItem.Value));
 

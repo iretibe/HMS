@@ -219,7 +219,7 @@ namespace HMS.WPF.ViewModels
             Hospital.Appointments[newAppointment.ID].Doctor.addAppointment(newAppointment);
             Hospital.Appointments[newAppointment.ID].Doctor.addPatient(newAppointment.Patient);
             HospitalDB.InsertAppointment(newAppointment);
-            Home.ViewModel.CloseRootDialog();
+            //Home.ViewModel.CloseRootDialog();
         }
     }
 }
