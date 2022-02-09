@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HMS.WPF.Views"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:system="clr-namespace:System;assembly=mscorlib" xmlns:viewmodels="clr-namespace:HMS.WPF.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:AppointmentPatientDetailsViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="540" d:DesignWidth="640">
 
@@ -124,7 +124,7 @@
                     x:Name="DoctorsList"
                     DisplayMemberPath="Value"
                     SelectedValuePath="Key" />
-                            <materialDesign:ColorZone Background="#0e263e" Grid.Row="1" Effect="{DynamicResource MaterialDesignShadowDepth5}">
+                            <materialDesign:ColorZone Background="cornflowerblue" Grid.Row="1" Effect="{DynamicResource MaterialDesignShadowDepth5}">
                                 <TextBlock Text="{Binding DoctorsNumber}" Foreground="White" Margin="16"/>
                             </materialDesign:ColorZone>
 
@@ -148,7 +148,7 @@
                             Background="White" 
                             Foreground="{StaticResource PrimaryColor}" 
                             x:Name="AppointmentsList"/>
-                            <materialDesign:ColorZone Background="#0e263e" Grid.Row="1" Effect="{DynamicResource MaterialDesignShadowDepth5}">
+                            <materialDesign:ColorZone Background="cornflowerblue" Grid.Row="1" Effect="{DynamicResource MaterialDesignShadowDepth5}">
                                 <TextBlock Text="{Binding AppointmentsNumber}" Foreground="White" Margin="16"/>
                             </materialDesign:ColorZone>
                         </Grid>
@@ -157,4 +157,5 @@
             </StackPanel>
         </Grid>
     </Grid>
+    
 </UserControl>

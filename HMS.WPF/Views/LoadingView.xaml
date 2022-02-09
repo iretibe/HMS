@@ -5,8 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:HMS.WPF.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+             d:DesignHeight="540" d:DesignWidth="640">
+
+    <Grid Background="{StaticResource GreyBG}">
+        <TextBlock Text="{Binding LoadingDataText}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 50 0 0" Foreground="{StaticResource LightText}"/>
+        <ProgressBar
+            Style="{StaticResource MaterialDesignCircularProgressBar}"
+            x:Name="DeterminateCircularProgress" 
+            IsIndeterminate="True" />
     </Grid>
 </UserControl>

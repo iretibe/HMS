@@ -14,17 +14,17 @@ namespace HMS.WPF.Data
             throw new UnintentionalCodeFirstException();
         }
 
-        public virtual DbSet<Appointment> Appointments { get; set; }
-        public virtual DbSet<AppointmentPatient> AppointmentPatients { get; set; }
-        public virtual DbSet<Department> Departments { get; set; }
-        public virtual DbSet<Doctor> Doctors { get; set; }
-        public virtual DbSet<Employee> Employees { get; set; }
-        public virtual DbSet<Medicine> Medicine { get; set; }
-        public virtual DbSet<Nurse> Nurses { get; set; }
-        public virtual DbSet<Patient> Patients { get; set; }
-        public virtual DbSet<Person> Persons { get; set; }
-        public virtual DbSet<ResidentPatient> ResidentPatients { get; set; }
-        public virtual DbSet<Room> Rooms { get; set; }
+        //public virtual DbSet<Appointment> Appointments { get; set; }
+        //public virtual DbSet<AppointmentPatient> AppointmentPatients { get; set; }
+        //public virtual DbSet<Department> Departments { get; set; }
+        //public virtual DbSet<Doctor> Doctors { get; set; }
+        //public virtual DbSet<Employee> Employees { get; set; }
+        //public virtual DbSet<Medicine> Medicine { get; set; }
+        //public virtual DbSet<Nurse> Nurse { get; set; }
+        //public virtual DbSet<Patient> Patients { get; set; }
+        //public virtual DbSet<Person> Persons { get; set; }
+        //public virtual DbSet<ResidentPatient> ResidentPatients { get; set; }
+        //public virtual DbSet<Room> Room { get; set; }
 
         //protected override void OnModelCreating(ModelBuilder modelBuilder)
         //{

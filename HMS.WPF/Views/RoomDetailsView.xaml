@@ -3,10 +3,154 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:HMS.WPF.Views"
+             xmlns:local="clr-namespace:HMS.WPF.Views" xmlns:system="clr-namespace:System;assembly=System.Runtime" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+             d:DesignHeight="540" d:DesignWidth="640">
+
+    <Grid Background="{StaticResource GreyBG}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="120"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Column="0" Grid.Row="0"  >
+                <TextBlock  Text="{Binding RoomNumber}" FontSize="30" Style="{StaticResource DetailsInfoTitle}" Foreground="{StaticResource PrimaryColor}" />
+                <TextBlock Text="{Binding RoomType}" Style="{StaticResource DetailsInfoTitle}" Margin="15 0 0 0" />
+            </StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button materialDesign:DialogHost.DialogClosingAttached="ClearEditRoom" Style="{StaticResource DetailsButton}"  Margin="15 0 0 0" Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}">Edit
+                    <Button.CommandParameter>
+                        <StackPanel>
+                            <StackPanel Margin="16">
+                                <TextBox Text="{Binding editedRoomNumber}"  materialDesign:HintAssist.Hint="Room Number"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" Margin="0 8 0 0" HorizontalAlignment="Left" Width="200" x:Name="RoomNumberTextBox" />
+                                <TextBlock  Text="{Binding textValidation}" Style="{StaticResource ErrorMsg}" x:Name="validation"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                                <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                    IsDefault="True"
+                                    Margin="0 8 8 0"
+                                    Command="{Binding EditRoom}">
+                                    <Button.CommandParameter>
+                                        <system:Boolean>True</system:Boolean>
+                                    </Button.CommandParameter>
+                                    EDIT
+                                </Button>
+                                <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                        IsCancel="True"
+                                        Margin="0 8 0 0"
+                                        Command="materialDesign:DialogHost.CloseDialogCommand">
+                                    <Button.CommandParameter>
+                                        <system:Boolean>False</system:Boolean>
+                                    </Button.CommandParameter>
+                                    CANCEL
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </Button.CommandParameter>
+                </Button>
+                <Button Style="{StaticResource DetailsButton}"  Margin="15 0 40 0" Command="{Binding DeleteRoom}">Delete
+
+                </Button>
+            </StackPanel>
+            <StackPanel Grid.Column="0" Grid.Row="1" Margin="0 15 0 0 ">
+                <TextBlock Text="Room Price" Style="{StaticResource DetailsInfoTitle}" />
+                <TextBlock Text="{Binding roomPrice}" Style="{StaticResource DetailsInfoValue}" />
+            </StackPanel>
+            <StackPanel  Grid.Row="1" Grid.Column="1" Margin="0 15 0 0">
+                <TextBlock Text="Room Capacity" Style="{StaticResource DetailsInfoTitle}" />
+                <TextBlock Text="{Binding roomCapacity}"  Style="{StaticResource DetailsInfoValue}" />
+            </StackPanel>
+            <StackPanel Grid.Column="0" Grid.Row="4">
+                <materialDesign:DialogHost  HorizontalAlignment="Left" Margin="15 40 0 0" VerticalAlignment="Center">
+                    <Border Style="{StaticResource DetailsDialogHostBorder}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <ListBox ItemsSource="{Binding PatientsList}" 
+                                     DisplayMemberPath="Value"
+                                     SelectedValuePath="Key"
+                                     Background="White" Foreground="{StaticResource PrimaryColor}" x:Name="PatientsList"></ListBox>
+                            <materialDesign:ColorZone Background="CornflowerBlue" Grid.Row="1" Effect="{DynamicResource MaterialDesignShadowDepth5}">
+                                <TextBlock Text="{Binding PatientsNumber}" Foreground="White" Margin="16"/>
+                            </materialDesign:ColorZone>
+                        </Grid>
+                    </Border>
+                </materialDesign:DialogHost>
+            </StackPanel>
+            <StackPanel Grid.Column="1" Grid.Row="4">
+                <materialDesign:DialogHost  HorizontalAlignment="Left" VerticalAlignment="Center" Margin="15 40 0 0">
+                    <Border Style="{StaticResource DetailsDialogHostBorder}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <ListBox ItemsSource="{Binding NursesList}"
+                                     DisplayMemberPath="Value"
+                                     SelectedItem="{Binding ListSelectedNurse}"
+                                     SelectedValuePath="Key"
+                                     MouseDoubleClick="RemoveNurseFromRoom"
+                                     Background="White" Foreground="{StaticResource PrimaryColor}" x:Name="NursesList"></ListBox>
+                            <materialDesign:ColorZone Background="CornflowerBlue" Grid.Row="1" Effect="{DynamicResource MaterialDesignShadowDepth5}">
+                                <TextBlock Text="{Binding NursesNumber}" Foreground="White" Margin="16"/>
+                            </materialDesign:ColorZone>
+                            <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"                                
+                                Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
+                                VerticalAlignment="Bottom" HorizontalAlignment="Right" 
+                                Grid.Row="0" Margin="0 0 28 -20"
+                                BorderThickness="0"
+                                BorderBrush="Transparent"
+                                materialDesign:ShadowAssist.ShadowDepth="Depth0"
+                                Background="{StaticResource PrimaryColor}">
+                                <Button.CommandParameter>
+                                    <StackPanel Margin="16">
+                                        <ComboBox ItemsSource="{Binding NursesComboBoxItems }" materialDesign:HintAssist.Hint="Nurses Names"
+                                          Style="{StaticResource MaterialDesignFloatingHintComboBox}" 
+                                            Margin="0 8 0 0" HorizontalAlignment="Left" Width="200" x:Name="NursesComboBoxItems" 
+                                            DisplayMemberPath="Value"
+                                                SelectedValuePath="Key" 
+                                         SelectedItem="{Binding NurseSelectedItem}">
+                                        </ComboBox>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                                            <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                                IsDefault="True"
+                                                Margin="0 8 8 0"
+                                               Command="{Binding assignNurse}">
+                                                <Button.CommandParameter>
+                                                    <system:Boolean>True</system:Boolean>
+                                                </Button.CommandParameter>
+                                                ADD
+                                            </Button>
+                                            <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                                IsCancel="True"
+                                                Margin="0 8 8 0"
+                                                Command="materialDesign:DialogHost.CloseDialogCommand">
+                                                <Button.CommandParameter>
+                                                    <system:Boolean>False</system:Boolean>
+                                                </Button.CommandParameter>
+                                                CANCEL
+                                            </Button>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Button.CommandParameter>
+                                <Viewbox Width="22" Height="22">
+                                    <Canvas Width="24" Height="24">
+                                        <Path Data="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z" Fill="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=Button}, Path=Foreground}" />
+                                    </Canvas>
+                                </Viewbox>
+                            </Button>
+                        </Grid>
+                    </Border>
+                </materialDesign:DialogHost>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

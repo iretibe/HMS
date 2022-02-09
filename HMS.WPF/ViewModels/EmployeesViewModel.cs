@@ -1,4 +1,5 @@
-﻿using HMS.WPF.Models;
+﻿using HMS.WPF.Data;
+using HMS.WPF.Models;
 using HMS.WPF.Services;
 using System;
 using System.Collections.Generic;
@@ -58,7 +59,7 @@ namespace HMS.WPF.ViewModels
             {
 
                 if (department != null)
-                    ComboBoxItems.Add(new ComboBoxPairs(department.ID, department.Name));
+                    ComboBoxItems.Add(new ComboBoxPairs(department.DepartmentID, department.Name));
             }
 
             Employees = new ObservableCollection<EmployeeCardViewModel>();
@@ -68,7 +69,7 @@ namespace HMS.WPF.ViewModels
                 Employees.Add(
                     new EmployeeCardViewModel
                     {
-                        ID = employee.ID,
+                        ID = employee.PersonID,
                         Name = employee.Name,
                         Role = (employee.GetType() == typeof(Doctor)) ? "Doctor" : "Nurse",
                         Department = (employee.Department != null) ? employee.Department.Name : "N/A",
@@ -118,7 +119,7 @@ namespace HMS.WPF.ViewModels
                 Employees.Add(
                     new EmployeeCardViewModel
                     {
-                        ID = newDoctor.ID,
+                        ID = newDoctor.PersonID,
                         Name = newDoctor.Name,
                         Salary = $"{newDoctor.Salary}$",
                         Department = newDoctor.Department.Name,
@@ -128,16 +129,16 @@ namespace HMS.WPF.ViewModels
                 FilteredEmployees.Add(
                    new EmployeeCardViewModel
                    {
-                       ID = newDoctor.ID,
+                       ID = newDoctor.PersonID,
                        Name = newDoctor.Name,
                        Salary = $"{newDoctor.Salary}$",
                        Department = newDoctor.Department.Name,
                        Role = "Doctor"
                    });
 
-                Hospital.Departments[newDoctor.Department.ID].addDoctor(newDoctor);
-                Hospital.Departments[newDoctor.Department.ID].HeadID = newDoctor.ID;
-                Hospital.Employees.Add(newDoctor.ID, newDoctor);
+                Hospital.Departments[newDoctor.Department.DepartmentID].addDoctor(newDoctor);
+                Hospital.Departments[newDoctor.Department.DepartmentID].HeadID = newDoctor.PersonID;
+                Hospital.Employees.Add(newDoctor.PersonID, newDoctor);
                 HospitalDB.InsertDoctor(newDoctor);
             }
             else if (EmployeeRole == "Nurse")
@@ -154,7 +155,7 @@ namespace HMS.WPF.ViewModels
                 Employees.Add(
                     new EmployeeCardViewModel
                     {
-                        ID = newNurse.ID,
+                        ID = newNurse.PersonID,
                         Name = newNurse.Name,
                         Salary = $"{newNurse.Salary}$",
                         Department = newNurse.Department.Name,
@@ -164,15 +165,15 @@ namespace HMS.WPF.ViewModels
                 FilteredEmployees.Add(
                    new EmployeeCardViewModel
                    {
-                       ID = newNurse.ID,
+                       ID = newNurse.PersonID,
                        Name = newNurse.Name,
                        Salary = $"{newNurse.Salary}$",
                        Department = newNurse.Department.Name,
                        Role = "Nurse"
                    });
 
-                Hospital.Departments[newNurse.Department.ID].addNurse(newNurse);
-                Hospital.Employees.Add(newNurse.ID, newNurse);
+                Hospital.Departments[newNurse.Department.DepartmentID].addNurse(newNurse);
+                Hospital.Employees.Add(newNurse.PersonID, newNurse);
                 HospitalDB.InsertNurse(newNurse);
             }
         }

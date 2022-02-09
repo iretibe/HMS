@@ -1,17 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using HMS.WPF.ViewModels;
+using MaterialDesignThemes.Wpf;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace HMS.WPF.Views
 {
@@ -20,9 +9,30 @@ namespace HMS.WPF.Views
     /// </summary>
     public partial class ResidentPatientDetailsView : UserControl
     {
+        public ResidentPatientDetailsViewModel ViewModel { get; set; }
+
         public ResidentPatientDetailsView()
         {
             InitializeComponent();
+
+        }
+
+        private void RemoveDoctorFromPatient(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            ((ResidentPatientDetailsViewModel)DataContext).RemoveDr();
+
+        }
+
+        private void RemoveMedicineFromPatient(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            ((ResidentPatientDetailsViewModel)DataContext).RemoveMedicine();
+
+        }
+
+        private void ClearEditResident(object sender, DialogClosingEventArgs eventArgs)
+        {
+            ((ResidentPatientDetailsViewModel)DataContext).textValidation = "";
+
         }
     }
 }

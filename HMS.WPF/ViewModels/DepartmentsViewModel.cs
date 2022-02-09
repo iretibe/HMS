@@ -1,5 +1,7 @@
-﻿using HMS.WPF.Models;
+﻿using HMS.WPF.Data;
+using HMS.WPF.Models;
 using HMS.WPF.Services;
+using HMS.WPF.Views;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -7,105 +9,105 @@ using System.Windows.Input;
 
 namespace HMS.WPF.ViewModels
 {
-    //public class DepartmentsViewModel : BaseViewModel
-    //{
-    //    //Items Properties
-    //    public ObservableCollection<DepartmentCardViewModel> Departments { get; set; }
-    //    public ObservableCollection<DepartmentCardViewModel> FilteredDepartments { get; set; }
+    public class DepartmentsViewModel : BaseViewModel
+    {
+        //Items Properties
+        public ObservableCollection<DepartmentCardViewModel> Departments { get; set; }
+        public ObservableCollection<DepartmentCardViewModel> FilteredDepartments { get; set; }
 
-    //    //Search Bar Properties
-    //    public String SearchQuery { get; set; }
-    //    public ICommand SearchAction { get; set; }
+        //Search Bar Properties
+        public String SearchQuery { get; set; }
+        public ICommand SearchAction { get; set; }
 
-    //    //Add Dialog Properites
-    //    public String DepartmentName { get; set; }
-    //    public String textValidation { get; set; }
-    //    public ICommand addNewDepartment { get; set; }
-        
-    //    public DepartmentsViewModel()
-    //    {
-    //        Departments = new ObservableCollection<DepartmentCardViewModel>();
-    //        SearchAction = new RelayCommand(Search);
-    //        addNewDepartment = new RelayCommand(addDepartment);
-            
-    //        //Adding All Departments Cards
-    //        foreach (Department department in Hospital.Departments.Values)
-    //        {
-    //            Departments.Add(
-    //                new DepartmentCardViewModel
-    //                {
-    //                    ID = department.ID,
-    //                    Name = department.Name,
-    //                    EmployeesNumber = department.Nurse.Count + department.Doctors.Count,
-    //                    PatientsNumber = department.Patients.Count
-    //                }
-    //            );
-    //        }
+        //Add Dialog Properites
+        public String DepartmentName { get; set; }
+        public String textValidation { get; set; }
+        public ICommand addNewDepartment { get; set; }
 
-    //        FilteredDepartments = new ObservableCollection<DepartmentCardViewModel>(Departments);
-    //    }
+        public DepartmentsViewModel()
+        {
+            Departments = new ObservableCollection<DepartmentCardViewModel>();
+            SearchAction = new RelayCommand(Search);
+            addNewDepartment = new RelayCommand(addDepartment);
 
-    //    private void Search()
-    //    {
-    //        if (String.IsNullOrEmpty(SearchQuery))
-    //        {
-    //            FilteredDepartments = new ObservableCollection<DepartmentCardViewModel>(Departments); return;
-    //        }
+            //Adding All Departments Cards
+            foreach (Department department in Hospital.Departments.Values)
+            {
+                Departments.Add(
+                    new DepartmentCardViewModel
+                    {
+                        ID = department.DepartmentID,
+                        Name = department.Name,
+                        EmployeesNumber = department.Nurse.Count + department.Doctors.Count,
+                        PatientsNumber = department.Patients.Count
+                    }
+                );
+            }
 
-    //        FilteredDepartments = new ObservableCollection<DepartmentCardViewModel>(
-    //            Departments.Where(department => department.Name.ToLower().Contains(SearchQuery))
-    //        );
-    //    }
+            FilteredDepartments = new ObservableCollection<DepartmentCardViewModel>(Departments);
+        }
 
-    //    public void addDepartment()
-    //    {
-    //        if (ValidateDepartment())
-    //        {
+        private void Search()
+        {
+            if (String.IsNullOrEmpty(SearchQuery))
+            {
+                FilteredDepartments = new ObservableCollection<DepartmentCardViewModel>(Departments); return;
+            }
 
-    //            //Add the new Department to the hospital & DB
-    //            Department newDepartment = new Department
-    //            {
-    //                Name = DepartmentName,
-    //            };
+            FilteredDepartments = new ObservableCollection<DepartmentCardViewModel>(
+                Departments.Where(department => department.Name.ToLower().Contains(SearchQuery))
+            );
+        }
 
-    //            Hospital.Departments.Add(newDepartment.ID, newDepartment);
-    //            HospitalDB.InsertDepartment(newDepartment);
+        public void addDepartment()
+        {
+            if (ValidateDepartment())
+            {
 
-    //            //Add card to the new department
-    //            Departments.Add(
-    //                new DepartmentCardViewModel
-    //                {
-    //                    ID = newDepartment.ID,
-    //                    Name = newDepartment.Name,
-    //                    PatientsNumber = newDepartment.Patients.Count,
-    //                    EmployeesNumber = newDepartment.Nurse.Count + newDepartment.Doctors.Count
-    //                });
+                //Add the new Department to the hospital & DB
+                Department newDepartment = new Department
+                {
+                    Name = DepartmentName,
+                };
 
-    //            FilteredDepartments.Add(
-    //               new DepartmentCardViewModel
-    //               {
-    //                   ID = newDepartment.ID,
-    //                   Name = newDepartment.Name,
-    //                   PatientsNumber = newDepartment.Patients.Count,
-    //                   EmployeesNumber = newDepartment.Nurse.Count + newDepartment.Doctors.Count
-    //               });
+                Hospital.Departments.Add(newDepartment.DepartmentID, newDepartment);
+                HospitalDB.InsertDepartment(newDepartment);
 
-    //            //Home.ViewModel.CloseRootDialog();
-    //        }
-    //        else
-    //            return;
-    //    }
+                //Add card to the new department
+                Departments.Add(
+                    new DepartmentCardViewModel
+                    {
+                        ID = newDepartment.DepartmentID,
+                        Name = newDepartment.Name,
+                        PatientsNumber = newDepartment.Patients.Count,
+                        EmployeesNumber = newDepartment.Nurse.Count + newDepartment.Doctors.Count
+                    });
 
-    //    public bool ValidateDepartment()
-    //    {
-    //        DepartmentName = (DepartmentName != null) ? DepartmentName.Trim() : "";
-    //        if (DepartmentName == "")
-    //        {
-    //            textValidation = "Department Name is empty";
-    //            return false;
+                FilteredDepartments.Add(
+                   new DepartmentCardViewModel
+                   {
+                       ID = newDepartment.DepartmentID,
+                       Name = newDepartment.Name,
+                       PatientsNumber = newDepartment.Patients.Count,
+                       EmployeesNumber = newDepartment.Nurse.Count + newDepartment.Doctors.Count
+                   });
 
-    //        }
-    //        return true;
-    //    }
-    //}
+                Home.ViewModel.CloseRootDialog();
+            }
+            else
+                return;
+        }
+
+        public bool ValidateDepartment()
+        {
+            DepartmentName = (DepartmentName != null) ? DepartmentName.Trim() : "";
+            if (DepartmentName == "")
+            {
+                textValidation = "Department Name is empty";
+                return false;
+
+            }
+            return true;
+        }
+    }
 }
