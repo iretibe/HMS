@@ -1,17 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HMS.WPF.Data
 {
-    public class Patient
+    public abstract class Patient : Person
     {
-        public Guid PatientID { get; set; }
-        public string Name { get; set; }
-        public DateTime BirthDate { get; set; }
-        public string Address { get; set; }
-        public string Diagnosis { get; set; }
+        //Member variables
+        protected String diagnosis;
+        protected Dictionary<String, Doctor> doctors;
+        
+        public String Diagnosis 
+        { 
+            get 
+            { 
+                return this.diagnosis; 
+            } 
+            
+            set 
+            { 
+                this.diagnosis = value; 
+            } 
+        }
+
+        public Dictionary<String, Doctor> Doctors 
+        { 
+            get 
+            { 
+                return this.doctors; 
+            } 
+            
+            set 
+            { 
+                this.doctors = value; 
+            } 
+        }
+
+        //Constructor
+        public Patient() : base()
+        {
+            this.Diagnosis = "";
+            this.Doctors = new Dictionary<String, Doctor>();
+        }
+
+        public Patient(string name, DateTime birthDate, String address, String diagnosis) : base(name, birthDate, address)
+        {
+            this.Diagnosis = diagnosis;
+            this.Doctors = new Dictionary<String, Doctor>();
+        }
+
+        //Member methods
+        public void assignDoctor(Doctor doctor)
+        {
+            if (!Doctors.ContainsKey(doctor.PersonID))
+                this.Doctors.Add(doctor.PersonID, doctor);
+        }
+
+        public void removeDoctor(String id)
+        {
+            this.Doctors.Remove(id);
+        }
+
+        public abstract double getBill();
     }
 }

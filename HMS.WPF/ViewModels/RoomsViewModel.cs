@@ -1,4 +1,5 @@
-﻿using HMS.WPF.Models;
+﻿using HMS.WPF.Data;
+using HMS.WPF.Models;
 using HMS.WPF.Services;
 using System;
 using System.Collections.ObjectModel;
@@ -31,7 +32,6 @@ namespace HMS.WPF.ViewModels
             foreach (Room room in Hospital.Rooms.Values)
             {
                 String type;
-                
                 if (room.GetType() == typeof(PrivateRoom))
                     type = "Private Room";
                 else if (room.GetType() == typeof(SemiPrivateRoom))
@@ -42,16 +42,16 @@ namespace HMS.WPF.ViewModels
                 Rooms.Add(
                     new RoomCardViewModel
                     {
-                        ID = room.ID,
+                        ID = room.RoomID,
                         RoomNumber = room.RoomNumber,
                         Type = type,
                         Capacity = room.Patients.Count.ToString() + "/" + room.Capacity
                     }
                 );
             }
-
             FilteredRooms = new ObservableCollection<RoomCardViewModel>(Rooms);
         }
+
 
         private void Search()
         {
@@ -74,11 +74,10 @@ namespace HMS.WPF.ViewModels
                 {
                     RoomNumber = int.Parse(RoomNumber),
                 };
-
                 Rooms.Add(
                     new RoomCardViewModel
                     {
-                        ID = newPrivateRoom.ID,
+                        ID = newPrivateRoom.RoomID,
                         RoomNumber = newPrivateRoom.RoomNumber,
                         Type = "Private Room",
                         Capacity = newPrivateRoom.Patients.Count.ToString() + '/' + newPrivateRoom.Capacity.ToString()
@@ -88,27 +87,27 @@ namespace HMS.WPF.ViewModels
                 FilteredRooms.Add(
                     new RoomCardViewModel
                     {
-                        ID = newPrivateRoom.ID,
+                        ID = newPrivateRoom.RoomID,
                         RoomNumber = newPrivateRoom.RoomNumber,
                         Type = "Private Room",
                         Capacity = newPrivateRoom.Patients.Count.ToString() + '/' + newPrivateRoom.Capacity.ToString()
                     }
                );
 
-                Hospital.Rooms.Add(newPrivateRoom.ID, newPrivateRoom);
+                Hospital.Rooms.Add(newPrivateRoom.RoomID, newPrivateRoom);
                 HospitalDB.InsertRoom(newPrivateRoom);
             }
+
             else if (RoomType == "Semi Private")
             {
                 SemiPrivateRoom newSemiPrivateRoom = new SemiPrivateRoom
                 {
                     RoomNumber = int.Parse(RoomNumber)
                 };
-
                 Rooms.Add(
                        new RoomCardViewModel
                        {
-                           ID = newSemiPrivateRoom.ID,
+                           ID = newSemiPrivateRoom.RoomID,
                            RoomNumber = newSemiPrivateRoom.RoomNumber,
                            Type = "Semi Private Room",
                            Capacity = newSemiPrivateRoom.Patients.Count.ToString() + '/' + newSemiPrivateRoom.Capacity.ToString()
@@ -118,26 +117,28 @@ namespace HMS.WPF.ViewModels
                 FilteredRooms.Add(
                     new RoomCardViewModel
                     {
-                        ID = newSemiPrivateRoom.ID,
+                        ID = newSemiPrivateRoom.RoomID,
                         RoomNumber = newSemiPrivateRoom.RoomNumber,
                         Type = "Semi Private Room",
                         Capacity = newSemiPrivateRoom.Patients.Count.ToString() + '/' + newSemiPrivateRoom.Capacity.ToString()
                     }
                );
 
-                Hospital.Rooms.Add(newSemiPrivateRoom.ID, newSemiPrivateRoom);
+                Hospital.Rooms.Add(newSemiPrivateRoom.RoomID, newSemiPrivateRoom);
                 HospitalDB.InsertRoom(newSemiPrivateRoom);
             }
+
             else if (RoomType == "Standard Ward")
             {
                 StandardWard newStandardWardRoom = new StandardWard
                 {
                     RoomNumber = int.Parse(RoomNumber)
                 };
+
                 Rooms.Add(
                        new RoomCardViewModel
                        {
-                           ID = newStandardWardRoom.ID,
+                           ID = newStandardWardRoom.RoomID,
                            RoomNumber = newStandardWardRoom.RoomNumber,
                            Type = "StandardWard Room",
                            Capacity = newStandardWardRoom.Patients.Count.ToString() + '/' + newStandardWardRoom.Capacity.ToString()
@@ -147,14 +148,14 @@ namespace HMS.WPF.ViewModels
                 FilteredRooms.Add(
                     new RoomCardViewModel
                     {
-                        ID = newStandardWardRoom.ID,
+                        ID = newStandardWardRoom.RoomID,
                         RoomNumber = newStandardWardRoom.RoomNumber,
                         Type = "StandardWard Room",
                         Capacity = newStandardWardRoom.Patients.Count.ToString() + '/' + newStandardWardRoom.Capacity.ToString()
                     }
                );
 
-                Hospital.Rooms.Add(newStandardWardRoom.ID, newStandardWardRoom);
+                Hospital.Rooms.Add(newStandardWardRoom.RoomID, newStandardWardRoom);
                 HospitalDB.InsertRoom(newStandardWardRoom);
             }
         }
@@ -162,7 +163,7 @@ namespace HMS.WPF.ViewModels
         public bool ValidateRoom()
         {
             RoomNumber = (RoomNumber != null) ? RoomNumber.Trim() : "";
-            
+
             if (RoomType == null)
             {
                 textValidation = "Room type is empty";

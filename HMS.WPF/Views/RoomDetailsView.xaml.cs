@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using HMS.WPF.ViewModels;
+using MaterialDesignThemes.Wpf;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace HMS.WPF.Views
 {
@@ -23,6 +13,17 @@ namespace HMS.WPF.Views
         public RoomDetailsView()
         {
             InitializeComponent();
+        }
+
+        private void RemoveNurseFromRoom(object sender, MouseButtonEventArgs e)
+        {
+            ((RoomDetailsViewModel)DataContext).RemoveNurse();
+        }
+
+        private void ClearEditRoom(object sender, DialogClosingEventArgs eventArgs)
+        {
+            ((RoomDetailsViewModel)DataContext).textValidation = "";
+            RoomNumberTextBox.Text = "";
         }
     }
 }

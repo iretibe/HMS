@@ -4,32 +4,94 @@ namespace HMS.WPF.Data
 {
     public class Appointment
     {
-        public Guid AppointmentID { get; set; }
-        public DateTime Date { get; set; }        
-        public int Duration { get; set; }
-        public double Bill { get; set; }
+        private string appointmentId;
+        private Doctor doctor;
+        private AppointmentPatient patient;
+        private DateTime date;
+        private int duration;
+        private double bill;
 
         //Foreign Key
         public Guid DoctorID { get; set; }
         public Guid PatientID { get; set; }
 
         //Navigation property
-        public Doctor Doctor { get; set; }
-        public Patient Patient { get; set; }
+        public Guid AppointmentID
+        {
+            get
+            {
+                return this.AppointmentID;
+            }
+            set
+            {
+                this.AppointmentID = value;
+            }
+        }
 
-        //Getters & setters
-        public String AppointmentIDll { get { return this.id; } set { this.id = value; } }
-        public Doctor Doctor { get { return this.doctor; } set { this.doctor = value; } }
-        public AppointmentPatient Patient { get { return this.patient; } set { this.patient = value; } }
-        public DateTime Date { get { return this.date; } set { this.date = value; } }
-        public int Duration { get { return this.duration; } set { this.duration = value; } }
-        public double Bill { get { return ((double)duration / 60) * Hospital.Config.AppointmentHourPrice; } set { this.bill = value; } }
-        
-        
+        public Doctor Doctor 
+        {
+            get 
+            {
+                return this.Doctor;
+            }
+            set 
+            {
+                this.Doctor = value;
+            } 
+        }
+
+        public AppointmentPatient Patient
+        {
+            get
+            {
+                return this.Patient;
+            }
+            set
+            {
+                this.Patient = value;
+            }
+        }
+
+        public DateTime Date
+        {
+            get
+            {
+                return this.Date;
+            }
+            set
+            {
+                this.Date = value;
+            }
+        }
+
+        public int Duration
+        {
+            get
+            {
+                return this.Duration;
+            }
+            set
+            {
+                this.Duration = value;
+            }
+        }
+
+        public double Bill
+        {
+            get
+            {
+                return this.Bill;
+            }
+            set
+            {
+                this.Bill = value;
+            }
+        }
+                
         //Constructors
         public Appointment()
         {
-            this.ID = Guid.NewGuid().ToString();
+            this.AppointmentID = Guid.NewGuid();
             this.Doctor = new Doctor();
             this.Patient = new AppointmentPatient();
             this.Date = new DateTime();
@@ -38,7 +100,7 @@ namespace HMS.WPF.Data
 
         public Appointment(Doctor doctor, AppointmentPatient patient, DateTime date, int duration)
         {
-            this.ID = Guid.NewGuid().ToString();
+            this.AppointmentID = Guid.NewGuid();
             this.Doctor = doctor;
             this.Patient = patient;
             this.Date = date;
@@ -47,8 +109,8 @@ namespace HMS.WPF.Data
 
         public void cancel()
         {
-            this.Doctor.removeAppointment(this.ID);
-            this.Patient.removeAppointment(this.ID);
+            this.Doctor.removeAppointment(this.AppointmentID.ToString());
+            this.Patient.removeAppointment(this.AppointmentID.ToString());
         }
     }
 }

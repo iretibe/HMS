@@ -1,6 +1,7 @@
 ﻿using HMS.WPF.Data;
 using HMS.WPF.Models;
 using HMS.WPF.Services;
+using HMS.WPF.Views;
 using HMS.WPF.Views.Components;
 using MaterialDesignThemes.Wpf;
 using System;
@@ -45,19 +46,19 @@ namespace HMS.WPF.ViewModels
 
             foreach (Doctor doctor in Hospital.Patients[id].Doctors.Values)
             {
-                DoctorsList.Add(new ComboBoxPairs(doctor.DoctorID.ToString(), doctor.Name));
+                DoctorsList.Add(new ComboBoxPairs(doctor.PersonID.ToString(), doctor.Name));
             }
 
             DoctorsNumber = "Doctors: " + Hospital.Patients[id].Doctors.Count.ToString();
 
             foreach (Appointment appointment in ((AppointmentPatient)Hospital.Patients[id]).Appointments.Values)
             {
-                AppointmentsList.Add(new ComboBoxPairs(appointment.ID, ("Date: " + appointment.Date.ToString() + " | " + appointment.Doctor.Name)));
+                AppointmentsList.Add(new ComboBoxPairs(appointment.AppointmentID.ToString(), ("Date: " + appointment.Date + " | " + appointment.Doctor.Name)));
             }
 
             AppointmentsNumber = "Appointments: " + ((AppointmentPatient)Hospital.Patients[id]).Appointments.Count().ToString();
 
-            // Edit Content
+            //Edit Content
             editAppointmentPatient = new RelayCommand(EditAppointmentPatient);
             EditPatientNameTextBox = Hospital.Patients[id].Name;
             EditPatientAddressTextBox = Hospital.Patients[id].Address;
@@ -80,7 +81,7 @@ namespace HMS.WPF.ViewModels
             }
 
             HospitalDB.UpdatePatient(Hospital.Patients[PatientID]);
-            //Home.ViewModel.CloseRootDialog();
+            Home.ViewModel.CloseRootDialog();
         }
 
         public async void DeleteAppointmentPatient()
@@ -88,10 +89,10 @@ namespace HMS.WPF.ViewModels
             object result = await DialogHost.Show(new DeleteMessageBox(), "RootDialog");
             if (result.Equals(true))
             {
-                // Delete Logic Here
+                //Delete Logic Here
                 HospitalDB.DeletePatient(PatientID);
                 Hospital.DeletePatient(PatientID);
-                //Home.ViewModel.Content = new PatientsViewModel();
+                Home.ViewModel.Content = new PatientsViewModel();
             }
         }
     }
