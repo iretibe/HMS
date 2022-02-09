@@ -222,3 +222,4 @@ C:\Users\Somad\source\repos\HMS\HMS.WPF\obj\Debug\HMS.WPF.exe
 C:\Users\Somad\source\repos\HMS\HMS.WPF\obj\Debug\HMS.WPF.pdb
 C:\Users\Somad\source\repos\HMS\HMS.WPF\obj\Debug\HMS.WPF.csproj.AssemblyReference.cache
 C:\Users\Somad\source\repos\HMS\HMS.WPF\obj\Debug\HMS.WPF_Content.g.cs
+C:\PROJECTS\HMS\HMS.WPF\obj\Debug\HMS.WPF_Content.g.cs

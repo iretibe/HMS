@@ -10,6 +10,7 @@
 //------------------------------------------------------------------------------
 
 using HMS.WPF.Views;
+using HMS.WPF.Views.Components;
 using System;
 using System.Diagnostics;
 using System.Windows;

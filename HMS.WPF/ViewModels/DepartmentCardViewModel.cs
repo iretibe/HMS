@@ -3,25 +3,25 @@ using System.Windows.Input;
 
 namespace HMS.WPF.ViewModels
 {
-    public class DepartmentCardViewModel : BaseViewModel
-    {
-        //Displayed Data Properties
-        public String ID { get; set; }
-        public String Name { get; set; }
-        public int EmployeesNumber { get; set; }
-        public int PatientsNumber { get; set; }
+    //public class DepartmentCardViewModel : BaseViewModel
+    //{
+    //    //Displayed Data Properties
+    //    public String ID { get; set; }
+    //    public String Name { get; set; }
+    //    public int EmployeesNumber { get; set; }
+    //    public int PatientsNumber { get; set; }
 
-        public ICommand NavigateToDetailsAction { get; set; }
+    //    public ICommand NavigateToDetailsAction { get; set; }
 
-        public DepartmentCardViewModel()
-        {
-            NavigateToDetailsAction = new RelayCommand(navigateToDetails);
-        }
+    //    public DepartmentCardViewModel()
+    //    {
+    //        NavigateToDetailsAction = new RelayCommand(navigateToDetails);
+    //    }
 
-        public void navigateToDetails()
-        {
-            //Open Deprtment Details Page
-            Home.ViewModel.Content = new DepartmentDetailsViewModel(ID);
-        }
-    }
+    //    public void navigateToDetails()
+    //    {
+    //        //Open Deprtment Details Page
+    //        Home.ViewModel.Content = new DepartmentDetailsViewModel(ID);
+    //    }
+    //}
 }

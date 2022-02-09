@@ -1,4 +1,5 @@
-﻿using HMS.WPF.Models;
+﻿using HMS.WPF.Data;
+using HMS.WPF.Models;
 using HMS.WPF.Services;
 using HMS.WPF.Views.Components;
 using MaterialDesignThemes.Wpf;
@@ -41,14 +42,14 @@ namespace HMS.WPF.ViewModels
             PatientID = id;
             DoctorsList = new ObservableCollection<ComboBoxPairs>();
             AppointmentsList = new ObservableCollection<ComboBoxPairs>();
-            
+
             foreach (Doctor doctor in Hospital.Patients[id].Doctors.Values)
             {
-                DoctorsList.Add(new ComboBoxPairs(doctor.ID, doctor.Name));
+                DoctorsList.Add(new ComboBoxPairs(doctor.DoctorID.ToString(), doctor.Name));
             }
-            
+
             DoctorsNumber = "Doctors: " + Hospital.Patients[id].Doctors.Count.ToString();
-            
+
             foreach (Appointment appointment in ((AppointmentPatient)Hospital.Patients[id]).Appointments.Values)
             {
                 AppointmentsList.Add(new ComboBoxPairs(appointment.ID, ("Date: " + appointment.Date.ToString() + " | " + appointment.Doctor.Name)));

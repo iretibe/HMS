@@ -1,47 +1,49 @@
-﻿//using System;
-//using System.Collections.Generic;
+﻿using HMS.WPF.Data;
+using System;
+using System.Collections.Generic;
 
-//namespace HMS.WPF.Models
-//{
-//    class AppointmentPatient : Patient
-//    {
-//        //Member variables
-//        private Dictionary<String, Appointment> appointments;
-//        public Dictionary<String, Appointment> Appointments { get { return this.appointments; } set { this.appointments = value; } }
-        
-//        //Constructors
-//        public AppointmentPatient() : base()
-//        {
-//            this.Appointments = new Dictionary<String, Appointment>();
-//        }
+namespace HMS.WPF.Models
+{
+    class AppointmentPatient : Patient
+    {
+        //Member variables
+        private Dictionary<String, Appointment> appointments;
+        public Dictionary<String, Appointment> Appointments { get { return this.appointments; } set { this.appointments = value; } }
 
-//        public AppointmentPatient(String name, DateTime birthDate, String address, String diagnosis) : base( name, birthDate, address, diagnosis)
-//        {
-//            this.Appointments = new Dictionary<String, Appointment>();
-//        }
-        
-//        //Member methods
-//        public void addAppointment( Appointment appointment)
-//        {
-//            if (!Appointments.ContainsKey(appointment.ID)){
-//                this.Appointments.Add(appointment.ID, appointment);
-//            }
-//        }
+        //Constructors
+        public AppointmentPatient() : base()
+        {
+            this.Appointments = new Dictionary<String, Appointment>();
+        }
 
-//        public void removeAppointment(String id)
-//        {
-//            this.Appointments.Remove(id);
-//        }
+        public AppointmentPatient(String name, DateTime birthDate, String address, String diagnosis) : base(name, birthDate, address, diagnosis)
+        {
+            this.Appointments = new Dictionary<String, Appointment>();
+        }
 
-//        public override double getBill()
-//        {
-//            Double Bill = 0.0;
-//            foreach(Appointment appointment in Appointments.Values)
-//            {
-//                Bill += appointment.Bill;
-//            }
+        //Member methods
+        public void addAppointment(Appointment appointment)
+        {
+            if (!Appointments.ContainsKey(appointment.AppointmentID.ToString()))
+            {
+                this.Appointments.Add(appointment.AppointmentID.ToString(), appointment);
+            }
+        }
 
-//            return Bill;
-//        }
-//    }
-//}
+        public void removeAppointment(String id)
+        {
+            this.Appointments.Remove(id);
+        }
+
+        public override double getBill()
+        {
+            Double Bill = 0.0;
+            foreach (Appointment appointment in Appointments.Values)
+            {
+                Bill += appointment.Bill;
+            }
+
+            return Bill;
+        }
+    }
+}
