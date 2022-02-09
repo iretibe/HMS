@@ -20,6 +20,8 @@ namespace HMS.WPF.Views
     /// </summary>
     public partial class AppointmentPatientDetailsView : UserControl
     {
+        public AppointmentPatientDetailsViewModel ViewModel { get; set; }
+
         public AppointmentPatientDetailsView()
         {
             InitializeComponent();
