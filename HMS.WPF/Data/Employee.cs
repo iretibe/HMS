@@ -2,7 +2,7 @@
 
 namespace HMS.WPF.Data
 {
-    public class Employee : Person
+    abstract class Employee : Person
     {
         protected double salary;
         protected DateTime employmentDate;

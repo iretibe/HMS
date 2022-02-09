@@ -1,6 +1,7 @@
 using HMS.WPF.Data;
 using HMS.WPF.Services;
 using HMS.WPF.ViewModels;
+using HMS.WPF.Views;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -231,17 +232,20 @@ namespace HMS.WPF.Models
             {
                 appointment.cancel();
             }
+            
             List<Patient> pats = new List<Patient>(((Doctor)Employees[DoctorId]).Patients.Values);
             foreach (Patient patient in pats)
             {
                 patient.removeDoctor(DoctorId);
             }
+            
             if (Hospital.Employees[DoctorId].Department != null)
             {
 
                 Hospital.Employees[DoctorId].Department.removeDoctor(DoctorId);
                 Hospital.Employees[DoctorId].Department = null;
             }
+
             Employees.Remove(DoctorId);
         }
 
@@ -313,11 +317,13 @@ namespace HMS.WPF.Models
                     ((ResidentPatient)patient).Department = null;
                 }
             }
+
             List<Doctor> drs = new List<Doctor>(Departments[DepartmentId].Doctors.Values);
             foreach (Doctor doctor in drs)
             {
                 doctor.Department = null;
             }
+            
             List<Nurse> nurses = new List<Nurse>(Departments[DepartmentId].Nurse.Values);
             foreach (Nurse nurse in nurses)
             {

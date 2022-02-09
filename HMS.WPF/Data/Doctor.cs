@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace HMS.WPF.Data
 {
-    public class Doctor : Employee
+    class Doctor : Employee
     {
         private bool isHead;
         private Dictionary<string, Patient> patients;

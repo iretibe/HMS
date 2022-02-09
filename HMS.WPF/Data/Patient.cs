@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HMS.WPF.Data
 {
-    public abstract class Patient : Person
+    abstract class Patient : Person
     {
         //Member variables
         protected String diagnosis;

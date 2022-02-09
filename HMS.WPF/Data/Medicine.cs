@@ -2,7 +2,7 @@
 
 namespace HMS.WPF.Data
 {
-    public class Medicine
+    class Medicine
     {
         private string medecineId;
         private string name;
