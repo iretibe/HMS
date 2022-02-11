@@ -7,12 +7,12 @@
         <ResourceDictionary 
             xmlns:materialDesign="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf">
             <!-- App Colors -->
-            <SolidColorBrush x:Key="PrimaryColor" Color="#34495e" />
+            <SolidColorBrush x:Key="PrimaryColor" Color="#191970" />
             <SolidColorBrush x:Key="AccentColor" Color="#2d6dd5" />
-            <SolidColorBrush x:Key="DarkText" Color="#0e263e" />
-            <SolidColorBrush x:Key="LightText" Color="#a6b4ba" />
-            <SolidColorBrush x:Key="SelectedButton" Color="#233342" />
-            <SolidColorBrush x:Key="GreyBG" Color="#ecf0f1" />
+            <SolidColorBrush x:Key="DarkText" Color="#000080" />
+            <SolidColorBrush x:Key="LightText" Color="#4169e1" />
+            <SolidColorBrush x:Key="SelectedButton" Color="#00008b" />
+            <SolidColorBrush x:Key="GreyBG" Color="#87ceeb" />
 
             <!-- Component Styles -->
             <Style x:Key="NavButton" BasedOn="{StaticResource MaterialDesignListBoxItem}" TargetType="{x:Type ListViewItem}">
