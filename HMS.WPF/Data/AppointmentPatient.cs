@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HMS.WPF.Data
 {
-    public class AppointmentPatient : Patient
+    class AppointmentPatient : Patient
     {
         //Member variables
         private Dictionary<string, Appointment> appointments;

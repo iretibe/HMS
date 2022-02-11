@@ -24,7 +24,6 @@ namespace HMS.WPF.ViewModels
 
         public async void DeleteAppointment()
         {
-            ((AppointmentsViewModel)Home.ViewModel.Content).FilteredAppointments.Clear();
             object result = await DialogHost.Show(new DeleteMessageBox(), "RootDialog");
             if (result.Equals(true))
             {

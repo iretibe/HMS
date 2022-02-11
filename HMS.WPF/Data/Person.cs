@@ -2,7 +2,7 @@
 
 namespace HMS.WPF.Data
 {
-    public class Person
+    abstract class Person
     {
         //Member variables
         protected Guid personId { get; set; }
